@@ -8,43 +8,61 @@
 	<title>Mapa Easy Park 2.2</title>
 	<link rel="stylesheet" href="<?php echo base_url("css/bootstrap.min.css");?>">
 	<link rel="stylesheet" href="<?php echo base_url("css/main.css");?>">
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 </head>
 <body>		
+	<?php $this->load->view('nav');?>
 	<div class="container">
 		<div id="formularioMapa" class="row">
 			<div id="mapa" class="col-md-12 well"></div>
 		</div>
 	</div>
+	<script src="js/infobox.js"></script>
 	<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
-	<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>	
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/mapa.js")?>"></script>
+
 	<script>
+
+		var idInfoBoxAberto;
+		var infoBox = [];
+
+		function abrirInfoBox(id, marker) {
+			if (typeof(idInfoBoxAberto) == 'number' && typeof(infoBox[idInfoBoxAberto]) == 'object') {
+				infoBox[idInfoBoxAberto].close();
+			}
+
+			infoBox[id].open(map, marker);
+			idInfoBoxAberto = id;
+		}
+
 		function carregarPontos() {
 			$.getJSON("<?php echo base_url('index.php/mapa/pegaPontos')?>", function(pontos) {
 				$.each(pontos, function(index, ponto) {
 					var marker = new google.maps.Marker({
 						position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
 						title: ponto.nome,
+						icon: 'img/marker.png',
 						map: map
 					});
-					console.log(ponto.latitude +' '+ ponto.longitude);
-					var infowindow = new google.maps.InfoWindow(), marker;
 
-					google.maps.event.addListener(marker, 'click', (function(marker, i) {
-						return function() {
-							infowindow.setContent(ponto.nome);
-							infowindow.open(map, marker);
-						}
-					})(marker))
+					var myOptions = {
+						content:"<h3 class='text-center text-uppercase'>"+ponto.nome+"</h3>"+' '+ponto.descricao,
+						pixelOffset: new google.maps.Size(-150, 0)
+					};
+
+					infoBox[ponto.id] = new InfoBox(myOptions);
+					infoBox[ponto.id].marker = marker;
+
+					infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
+						abrirInfoBox(ponto.id, marker);
+					});
 
 				});
 			});
 		}
 		carregarPontos();
 
-
-		
 		/*$.ajax({
 			url: "<?php echo base_url('index.php/mapa/pegaPontos')?>",
 			dataType : 'json',
