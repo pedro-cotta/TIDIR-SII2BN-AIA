@@ -28,12 +28,15 @@
 		var infoBox = [];
 
 		function abrirInfoBox(id, marker) {
-			if (typeof(idInfoBoxAberto) == 'number' && typeof(infoBox[idInfoBoxAberto]) == 'object') {
+			if (typeof(idInfoBoxAberto) == 'string' && typeof(infoBox[idInfoBoxAberto]) == 'object') 
+			{
 				infoBox[idInfoBoxAberto].close();
 			}
 
 			infoBox[id].open(map, marker);
 			idInfoBoxAberto = id;
+			console.log(typeof(idInfoBoxAberto));
+			console.log(typeof(infoBox[idInfoBoxAberto]));
 		}
 
 		function carregarPontos() {
@@ -47,7 +50,7 @@
 					});
 
 					var myOptions = {
-						content:"<h3 class='text-center text-uppercase'>"+ponto.nome+"</h3>"+' '+ponto.descricao,
+						content:"<h4 class='text-center text-uppercase'>"+ponto.nome+"</h4>"+' '+"<p>"+ponto.descricao+"</p>",
 						pixelOffset: new google.maps.Size(-150, 0)
 					};
 
