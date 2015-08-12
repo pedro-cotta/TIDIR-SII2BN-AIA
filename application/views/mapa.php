@@ -7,10 +7,10 @@
 	<title>Mapa Easy Park 2.2</title>
 	<link rel="stylesheet" href="<?php echo base_url("css/bootstrap.min.css");?>">
 	<link rel="stylesheet" href="<?php echo base_url("css/main.css");?>">
-	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 </head>
 <body>		
-<?php $this->load->view('nav');?>
+	<?php $this->load->view('nav');?>
 	<div class="container">
 		<div id="formularioMapa" class="row">
 			<div id="mapa" class="col-md-12 well"></div>
@@ -52,7 +52,7 @@
 					});
 
 					var myOptions = {
-						content:"<h5 class='text-center text-uppercase'>"+ponto.nome+"</h5>"+' '+"<p>"+ponto.descricao+"</p>",
+						content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
 						pixelOffset: new google.maps.Size(-150, 0)
 					};
 
@@ -74,6 +74,7 @@
 			});
 		}
 		carregarPontos();
-</script>
+
+	</script>
 </body>
 </html>
