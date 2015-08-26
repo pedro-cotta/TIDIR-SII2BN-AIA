@@ -23,7 +23,6 @@
 	<script src="<?php echo base_url("js/mapa.js")?>"></script>
 
 	<script>
-
 		var idInfoBoxAberto;
 		var infoBox = [];
 		var markers = [];
@@ -74,7 +73,6 @@
 			});
 		}
 		carregarPontos();
-
 	</script>
 </body>
 </html>
