@@ -18,14 +18,15 @@ function initialize() {
 			console.log('Erro ao obter localização.', error);
 		});
 
-		var latlng = new google.maps.LatLng(posicao[0], posicao[1]);
+		var latlng = new google.maps.LatLng(-19.9166813,-43.9344931);
 		var options = {
-			zoom: 5,
+			zoom: 16,
 			center: latlng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		map = new google.maps.Map(document.getElementById("mapa"), options);
 		var geocoder = new google.maps.Geocoder();
+		
 		markerInicial = new google.maps.Marker({
 			map: map,
 			draggable: true,

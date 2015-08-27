@@ -68,7 +68,7 @@
 				});
 
 				var markerCluster = new MarkerClusterer(map, markers);
-				map.fitBounds(latlngbounds);
+				//map.fitBounds(latlngbounds);
 
 			});
 		}
