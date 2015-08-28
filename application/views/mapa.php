@@ -13,7 +13,7 @@
 	<?php $this->load->view('nav');?>
 	<div class="container">
 		<div id="formularioMapa" class="row">
-			<div id="mapa" class="col-md-12 well"></div>
+			<div id="mapa" class='center-block'></div>
 		</div>
 	</div>
 	<script src="js/markerclusterer.js"></script>
