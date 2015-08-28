@@ -17,8 +17,8 @@ function initialize() {
 			alert('Erro ao obter localização!');
 			console.log('Erro ao obter localização.', error);
 		});
-
-		var latlng = new google.maps.LatLng(-19.9166813,-43.9344931);
+		
+		var latlng = markerInicial; // new google.maps.LatLng(-19.9166813,-43.9344931);
 		var options = {
 			zoom: 16,
 			center: latlng,
