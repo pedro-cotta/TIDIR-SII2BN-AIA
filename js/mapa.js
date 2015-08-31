@@ -1,12 +1,9 @@
 'use strict'
 var map;
 var markerInicial;
-var latlng;
 var options;
 
 function initialize() {
-
-	console.log(latlng);
 
 	var options = {
 		zoom: 16,
@@ -23,7 +20,7 @@ function initialize() {
 			lat: position.coords.latitude,
 			lng: position.coords.longitude
 		};
-
+		console.log(pos);
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
 	});
@@ -34,6 +31,19 @@ function initialize() {
 		icon: 'img/markerInitial2.png',
 		title: 'Posição Atual',
 		animation:  google.maps.Animation.BOUNCE
+	});
+
+	var lat = -19.918534;
+	var lng = -43.941391;
+
+	var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
+	geocoder.geocode({'location': latlng}, function(results, status) {
+		if (status === google.maps.GeocoderStatus.OK) {
+			if (results[1]) {
+				var endereco = results[1].formatted_address;
+			};
+			console.log(endereco);
+		};
 	});
 }
 initialize();
