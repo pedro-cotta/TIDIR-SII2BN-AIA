@@ -1,34 +1,28 @@
 'use strict'
 var map;
 var markerInicial;
-var posicao = new Array;
+var latlng;
+var batata;
 
-function initialize() {
-
-try {
-	if(navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position){
-			markerInicial.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
-			posicao.push(position.coords.latitude);
-			posicao.push(position.coords.longitude);
-			console.log(posicao);
-		}, 
-		function(error){
-			alert('Erro ao obter localização!');
-			console.log('Erro ao obter localização.', error);
+function current(){
+	navigator.geolocation.getCurrentPosition(function(position){
+		latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		batata = "FODAS";
 		});
-
-	} else {
-		console.log('Navegador não suporta Geolocalização!');
+	return latlng;
 	}
 
-		navigator.geolocation.getCurrentPosition(function(pos){
-		var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+
+function initialize() {
+	 var yes = current();
+			console.log(batata);
+		
 		var options = {
 			zoom: 16,
-			center: latlng,
+			center: yes,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
+
 		map = new google.maps.Map(document.getElementById("mapa"), options);
 		var geocoder = new google.maps.Geocoder();
 
@@ -39,14 +33,10 @@ try {
 			title: 'Posição Atual',
 			animation:  google.maps.Animation.BOUNCE
 		});
+	
 
-	});
-	}
-catch(err) {
-    console.log("ERRO PORRA");
-}
-
-//markerInicial.setPosition(latlng);
+markerInicial.setPosition(latlng);
 
 }
 initialize();
+ 
