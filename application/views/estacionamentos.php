@@ -17,6 +17,7 @@
 					<table class="table table-hover" id="table_original">
 						<thead>
 							<tr>
+								<td>Nº</td>
 								<td>Nome</td>
 								<td>Descrição</td>
 								<td class="text-center">Endereço</td>
@@ -25,13 +26,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ($parks as $park) :?>
+							<?php $c = 1; foreach ($parks as $park) :?>
 								<tr>
+									<td><?= $c; ?></td>
 									<td><?= $park["nome"]?></td>
 									<td><?= $park["descricao"]?></td>
-									<td id ="endereco" class="text-center"><?php endereco($park["latitude"],$park["longitude"])?></td>
+									<td id ="endereco<?= $c ?>" class="text-center"><?php endereco($park["latitude"],$park["longitude"])?>batata</td>
 								</tr>
-							<?php  endforeach; ?>
+								<?php $c++; ?>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>
