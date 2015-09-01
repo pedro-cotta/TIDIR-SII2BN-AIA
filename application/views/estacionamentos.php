@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="<?php echo base_url("css/bootstrap.min.css");?>">
 	<link rel="stylesheet" href="<?php echo base_url("css/main.css");?>">
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script src="<?php echo base_url("js/estacionamento.js")?>"></script>
 </head>
 <body>		
 	<?php $this->load->view('nav');?>
@@ -17,7 +18,7 @@
 					<table class="table table-hover" id="table_original">
 						<thead>
 							<tr>
-								<td>Nº</td>
+								
 								<td>Nome</td>
 								<td>Descrição</td>
 								<td class="text-center">Endereço</td>
@@ -26,14 +27,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $c = 1; foreach ($parks as $park) :?>
+							<?php foreach ($parks as $park) :
+								$lat = $park['latitude'];
+								$long = $park['longitude'];
+								?>
 								<tr>
-									<td><?= $c; ?></td>
 									<td><?= $park["nome"]?></td>
 									<td><?= $park["descricao"]?></td>
-									<td id ="endereco<?= $c ?>" class="text-center"><?php endereco($park["latitude"],$park["longitude"])?>batata</td>
+									<td id ="endereco" class="text-center"><?="<script>endereco(".$lat.",".$long.")</script>"?></td>
+									<td><script src="<?php echo base_url('js/estacionamento.js/endereco($lat, $long')?>"></script></td>
 								</tr>
-								<?php $c++; ?>
 							<?php endforeach; ?>
 						</tbody>
 					</table>
