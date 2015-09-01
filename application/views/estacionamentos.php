@@ -28,23 +28,23 @@
 						</thead>
 						<tbody>
 							<?php foreach ($parks as $park) :
-								$lat = $park['latitude'];
-								$long = $park['longitude'];
-								?>
-								<tr>
-									<td><?= $park["nome"]?></td>
-									<td><?= $park["descricao"]?></td>
-									<td id ="endereco" class="text-center"><?="<script>endereco(".$lat.",".$long.")</script>"?></td>
-									<td><script src="<?php echo base_url('js/estacionamento.js/endereco($lat, $long')?>"></script></td>
-								</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-				</div>
+							$lat = $park['latitude'];
+							$long = $park['longitude'];
+							?>
+							<?php $end = "<script>enderecos(".$lat.",".$long.")</script>"?>
+							<tr>
+								<td><?= $park["nome"]?></td>
+								<td><?= $park["descricao"]?></td>
+								<td id ="endereco" class="text-center"><?= $end ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
-	<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
-	<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>
+</div>
+<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
+<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>
 </body>
 </html>

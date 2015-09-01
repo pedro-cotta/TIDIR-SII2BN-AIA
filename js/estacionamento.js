@@ -1,6 +1,6 @@
 'use strict'
 var endereco = ' ';
-function endereco(lat, lng) 
+function enderecos(lat, lng) 
 {
 	var geocoder = new google.maps.Geocoder();
 	var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
