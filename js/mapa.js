@@ -21,9 +21,18 @@ function initialize() {
 			lng: position.coords.longitude
 		};
 		console.log(pos);
-		console.log("batata");
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
+
+		//var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
+		geocoder.geocode({'location': pos}, function(results, status) {
+			if (status === google.maps.GeocoderStatus.OK) {
+				if (results[1]) {
+					var endereco = results[1].formatted_address;
+				};
+				console.log(endereco);
+			};
+		});
 	});
 
 	markerInicial = new google.maps.Marker({
@@ -34,17 +43,5 @@ function initialize() {
 		animation:  google.maps.Animation.BOUNCE
 	});
 
-	
-	var lat = -19.918534;
-	var lng = -43.941391;
-	var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
-	geocoder.geocode({'location': latlng}, function(results, status) {
-		if (status === google.maps.GeocoderStatus.OK) {
-			if (results[1]) {
-				var endereco = results[1].formatted_address;
-			};
-			console.log(endereco);
-		};
-	});
 }
 initialize();

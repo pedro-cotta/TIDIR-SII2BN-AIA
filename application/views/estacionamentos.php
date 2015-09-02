@@ -27,7 +27,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ($parks as $park) :
+							<?php $c = 1; foreach ($parks as $park) :
 							$lat = $park['latitude'];
 							$long = $park['longitude'];
 							?>
@@ -35,9 +35,9 @@
 							<tr>
 								<td><?= $park["nome"]?></td>
 								<td><?= $park["descricao"]?></td>
-								<td id ="endereco" class="text-center"><?= $end ?></td>
+								<td <?="id=ende".$c."" ?> class="text-center"><?= $end ?></td>
 							</tr>
-						<?php endforeach; ?>
+						<?php $c++; endforeach; ?>
 					</tbody>
 				</table>
 			</div>

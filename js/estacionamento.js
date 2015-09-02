@@ -1,7 +1,9 @@
 'use strict'
 var endereco = ' ';
+var c = 1;
 function enderecos(lat, lng) 
 {
+	
 	var geocoder = new google.maps.Geocoder();
 	var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
 	geocoder.geocode({'location': latlng}, function(results, status) {
@@ -11,7 +13,8 @@ function enderecos(lat, lng)
 			};
 			console.log(latlng);
 			console.log(endereco);
+			document.getElementById('ende'+c).innerHTML = endereco;
+			c++;
 		};
 	});
-	return endereco;
 } 
