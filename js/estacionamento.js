@@ -3,7 +3,6 @@ var endereco = ' ';
 var c = 1;
 function enderecos(lat, lng) 
 {
-	
 	var geocoder = new google.maps.Geocoder();
 	var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
 	geocoder.geocode({'location': latlng}, function(results, status) {

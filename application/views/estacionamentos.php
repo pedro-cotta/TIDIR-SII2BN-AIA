@@ -21,7 +21,7 @@
 								
 								<td>Nome</td>
 								<td>Descrição</td>
-								<td class="text-center">Endereço</td>
+								<td>Endereço</td>
 								<!--<td class="text-center">Data</td>
 								<td class="text-center">Visualizar</td>-->
 							</tr>
@@ -35,11 +35,12 @@
 							<tr>
 								<td><?= $park["nome"]?></td>
 								<td><?= $park["descricao"]?></td>
-								<td <?="id=ende".$c."" ?> class="text-center"><?= $end ?></td>
+								<td <?="id=ende".$c."" ?>><?= $end ?></td>
 							</tr>
 						<?php $c++; endforeach; ?>
 					</tbody>
 				</table>
+				<button class="btn btn-warning" style="float: right;">Novo Estacionamento</button>
 			</div>
 		</div>
 	</div>
