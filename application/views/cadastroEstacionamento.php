@@ -19,7 +19,8 @@
 					<div>
 						<?php if ($this->session->flashdata("sucesso")) {?>
 						<p class="alert-success"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com secesso.</p>
-						<?php }; if ($this->session->flashdata("erro")) {?>
+						<?php }
+						if ($this->session->flashdata("erro")) {?>
 						<p class="alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Verifique as informações necessárias.</p>
 						<?php } ?>
 					</div>

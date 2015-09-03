@@ -21,6 +21,11 @@ class estacionamentos extends CI_Controller{
 	public function novoEstacionamento()
 	{
 		$this->output->enable_profiler(FALSE);
+		if (empty($this->input->post('nome')) OR empty($this->input->post('descricao')) OR empty($this->input->post('latitude'))) {
+			$this->session->set_flashdata("erro" , "erro");
+			redirect ("estacionamentos/cadastroEstacionamento");
+		}
+		 
 		$dados = array(
 			'nome'=>$this->input->post('nome'),
 			'descricao'=>$this->input->post('descricao'),
