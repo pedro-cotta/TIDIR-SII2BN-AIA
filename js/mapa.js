@@ -20,7 +20,6 @@ function initialize() {
 			lat: position.coords.latitude,
 			lng: position.coords.longitude
 		};
-		console.log(pos);
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
 
@@ -30,7 +29,6 @@ function initialize() {
 				if (results[1]) {
 					var endereco = results[1].formatted_address;
 				};
-				console.log(endereco);
 			};
 		});
 	});

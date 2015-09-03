@@ -20,15 +20,26 @@ class estacionamentos extends CI_Controller{
 
 	public function novoEstacionamento()
 	{
+		$this->output->enable_profiler(FALSE);
 		$dados = array(
-			"nome"=>$this->input->post("nome"),
+			'nome'=>$this->input->post('nome'),
 			'descricao'=>$this->input->post('descricao'),
 			'latitude' => $this->input->post('latitude'),
 			'longitude' => $this->input->post('longitude')
 			);
-		print_r($dados);
-		//$this->load->model("estacionamento_model");
-		//$parks = $this->estacionamento_model->novo($dados);
+		$this->load->model("estacionamento_model");
+		$parks = $this->estacionamento_model->novo($dados);
+
+		if ($parks) 
+		{
+			$this->session->set_flashdata("sucesso" , "sucesso");
+			redirect ("estacionamentos/cadastroEstacionamento");
+		} 
+		elseif (!$parks) 
+		{
+			$this->session->set_flashdata("erro" , "erro");
+			redirect ("estacionamentos/cadastroEstacionamento");
+		}	
 	}
 }
 

@@ -10,7 +10,7 @@ class estacionamento_model extends CI_Model
 
 	public function novo($dados)
 	{
-		$this->db->insert('');
+		$this->db->insert('parks', $dados);
 	}
 }
 

@@ -16,8 +16,14 @@
 			<div class="col-md-4 well col-md-offset-4">
 				<div class="col-md-10 col-md-offset-1">
 					<h2 id="textoCadastro" class="text-center">Cadastro de Estacionamento</h2>
+					<div>
+						<?php if ($this->session->flashdata("sucesso")) {?>
+						<p class="alert-success"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com secesso.</p>
+						<?php }; if ($this->session->flashdata("erro")) {?>
+						<p class="alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Verifique as informações necessárias.</p>
+						<?php } ?>
+					</div>
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
-
 					<div class="form-group">
 						<?php echo form_label("Nome","nome");?>
 						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
@@ -33,8 +39,8 @@
 						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control"));?>
 					</div>
 					<div>
-						<input name="latitude" type="hidden" value="latitude">
-						<input name="longitude" type="hidden" value="longitude">
+						<input id="latitude" name="latitude" type="hidden">
+						<input id="longitude" name="longitude" type="hidden">
 					</div>
 					<?php echo form_button(array("content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
 					<?php echo form_close() ?>
@@ -65,9 +71,8 @@
 			},
 			select: function (event, ui) {
 				var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-				document.getElementsByName('latitude').value = ui.item.latitude;
-				document.getElementsByName('longitude').value = ui.item.longitude;
-				console.log(location);
+				document.getElementById('latitude').value = ui.item.latitude;
+				document.getElementById('longitude').value = ui.item.longitude;
 			}
 		});
 	</script>

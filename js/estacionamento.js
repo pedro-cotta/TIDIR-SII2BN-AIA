@@ -10,8 +10,6 @@ function enderecos(lat, lng)
 			if (results[1]) {
 				endereco = results[1].formatted_address;
 			};
-			console.log(latlng);
-			console.log(endereco);
 			document.getElementById('ende'+c).innerHTML = endereco;
 			c++;
 		};
