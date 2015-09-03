@@ -18,12 +18,9 @@
 					<table class="table table-hover" id="table_original">
 						<thead>
 							<tr>
-								
 								<td>Nome</td>
 								<td>Descrição</td>
 								<td>Endereço</td>
-								<!--<td class="text-center">Data</td>
-								<td class="text-center">Visualizar</td>-->
 							</tr>
 						</thead>
 						<tbody>
