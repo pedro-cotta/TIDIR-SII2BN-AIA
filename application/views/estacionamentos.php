@@ -37,15 +37,17 @@
 								<td><?= $park["descricao"]?></td>
 								<td <?="id=ende".$c."" ?>><?= $end ?></td>
 							</tr>
-						<?php $c++; endforeach; ?>
-					</tbody>
-				</table>
-				<button class="btn btn-warning" style="float: right;">Novo Estacionamento</button>
+							<?php $c++; endforeach; ?>
+						</tbody>
+					</table>
+					<div style="float:right;">
+						<?=anchor("estacionamentos/cadastroEstacionamento","Novo Estacionamento");?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
-<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>
+	<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
+	<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>
 </body>
 </html>

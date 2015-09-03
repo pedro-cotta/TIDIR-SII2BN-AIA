@@ -10,14 +10,25 @@ class estacionamentos extends CI_Controller{
 		$dados = array(
 			"parks" => $parks,
 			);
-		$this->load->view("estacionamentos", $dados);
-		
+		$this->load->view("estacionamentos", $dados);	
+	}
 
+	public function cadastroEstacionamento()
+	{
+		$this->load->view("cadastroEstacionamento");
 	}
 
 	public function novoEstacionamento()
 	{
-
+		$dados = array(
+			"nome"=>$this->input->post("nome"),
+			'descricao'=>$this->input->post('descricao'),
+			'latitude' => $this->input->post('latitude'),
+			'longitude' => $this->input->post('longitude')
+			);
+		print_r($dados);
+		//$this->load->model("estacionamento_model");
+		//$parks = $this->estacionamento_model->novo($dados);
 	}
 }
 
