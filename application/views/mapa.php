@@ -73,6 +73,22 @@
 			});
 		}
 		carregarPontos();
+
+		function displayRoute(origin, destination, service, display) {
+			service.route({
+				origin: origin,
+				destination: destination,
+				waypoints: [{location: 'Cocklebiddy, WA'}, {location: 'Broken Hill, NSW'}],
+				travelMode: google.maps.TravelMode.DRIVING,
+				avoidTolls: true
+			}, function(response, status) {
+				if (status === google.maps.DirectionsStatus.OK) {
+					display.setDirections(response);
+				} else {
+					alert('Could not display directions due to: ' + status);
+				}
+			});
+		}
 	</script>
 </body>
 </html>

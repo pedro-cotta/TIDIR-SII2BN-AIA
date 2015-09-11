@@ -41,5 +41,12 @@ function initialize() {
 		animation:  google.maps.Animation.BOUNCE
 	});
 
+	var directionsService = new google.maps.DirectionsService;
+
+	directionsDisplay.addListener('directions_changed', function() {
+		computeTotalDistance(directionsDisplay.getDirections());
+	});
+	displayRoute('Perth, WA', 'Sydney, NSW', directionsService,
+		directionsDisplay);
 }
 initialize();

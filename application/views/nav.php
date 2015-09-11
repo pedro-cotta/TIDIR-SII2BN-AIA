@@ -17,11 +17,17 @@
 					<span class="glyphicon glyphicon-cog"> </span><span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-left" role="menu">
-				<li><?=anchor("estacionamentos","Meus Estacionamentos");?></li>
+					<li><?=anchor("estacionamentos","Meus Estacionamentos");?></li>
 					<li><?=anchor("","Sair");?></li>
 				</ul>
 			</li>
 		</ul>
+		<form class="navbar-form navbar-left" role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Pesquisar">
+			</div>
+			<button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
+		</form>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 		</ul>
