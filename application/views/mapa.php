@@ -16,11 +16,14 @@
 			<div id="mapa" class='center-block'></div>
 		</div>
 		<div id="traçarRota">
-		<?php echo form_button(array("content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
+			<?php echo form_open() ?>
+			<input type="text" class="form-control" id="inicial" value="">
+			<input type="text" class="form-control" id="destino" value="">
+			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
+			<?php echo form_close(); ?>
 		</div>
 	</div>
-	<div id="lat"></div>
-	<div id="lng"></div>
+
 	<script src="js/markerclusterer.js"></script>
 	<script src="js/infobox.js"></script>
 	<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
@@ -69,14 +72,44 @@
 					markers.push(marker);
 					latlngbounds.extend(marker.position);
 
+					$(document).ready(function () {
+						google.maps.event.addListener(marker, 'click', function () {
+							geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									if (results[1]) { 
+										$('#destino').val(results[1].formatted_address);
+									}
+								}
+							});
+						});
+					});
+
 				});
 
-				var markerCluster = new MarkerClusterer(map, markers);
-				//map.fitBounds(latlngbounds);
+var markerCluster = new MarkerClusterer(map, markers);
 
-			});
+});
+}
+carregarPontos();
+
+$("form").submit(function(event) {
+	event.preventDefault();
+	infoBox[idInfoBoxAberto].close();
+	var enderecoPartida = $("#inicial").val();
+	var enderecoChegada = $("#destino").val();
+
+	var request = { 
+		origin: enderecoPartida, 
+		destination: enderecoChegada, 
+		travelMode: google.maps.TravelMode.DRIVING
+	};
+
+	directionsService.route(request, function(result, status) {
+		if (status == google.maps.DirectionsStatus.OK) { 
+			directionsDisplay.setDirections(result); 
 		}
-		carregarPontos();
-	</script>
+	});
+});
+</script>
 </body>
 </html>

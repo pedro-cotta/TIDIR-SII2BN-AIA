@@ -3,6 +3,8 @@ var map;
 var directionsDisplay;
 var markerInicial;
 var options;
+var geocoder = new google.maps.Geocoder();
+var directionsService = new google.maps.DirectionsService();
 
 function initialize() {
 	directionsDisplay = new google.maps.DirectionsRenderer();
@@ -11,8 +13,6 @@ function initialize() {
 		center: {lat: -19.918534, lng: -43.941391},
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
-
-	var geocoder = new google.maps.Geocoder();
 
 	map = new google.maps.Map(document.getElementById("mapa"), options);
 	directionsDisplay.setMap(map);
@@ -31,9 +31,10 @@ function initialize() {
 				if (results[1]) {
 					var endereco = results[1].formatted_address;
 				};
-				console.log(endereco);
+				document.getElementById('inicial').value = endereco;
 			};
 		});
+
 	});
 
 	markerInicial = new google.maps.Marker({
@@ -43,6 +44,8 @@ function initialize() {
 		title: 'Posição Atual',
 		animation:  google.maps.Animation.BOUNCE
 	});
+
+	console.log();
 
 }
 initialize();
