@@ -1,10 +1,11 @@
 'use strict'
 var map;
+var directionsDisplay;
 var markerInicial;
 var options;
 
 function initialize() {
-
+	directionsDisplay = new google.maps.DirectionsRenderer();
 	var options = {
 		zoom: 16,
 		center: {lat: -19.918534, lng: -43.941391},
@@ -14,6 +15,7 @@ function initialize() {
 	var geocoder = new google.maps.Geocoder();
 
 	map = new google.maps.Map(document.getElementById("mapa"), options);
+	directionsDisplay.setMap(map);
 
 	navigator.geolocation.getCurrentPosition(function(position) {
 		var pos = {
@@ -29,6 +31,7 @@ function initialize() {
 				if (results[1]) {
 					var endereco = results[1].formatted_address;
 				};
+				console.log(endereco);
 			};
 		});
 	});
@@ -41,12 +44,5 @@ function initialize() {
 		animation:  google.maps.Animation.BOUNCE
 	});
 
-	var directionsService = new google.maps.DirectionsService;
-
-	directionsDisplay.addListener('directions_changed', function() {
-		computeTotalDistance(directionsDisplay.getDirections());
-	});
-	displayRoute('Perth, WA', 'Sydney, NSW', directionsService,
-		directionsDisplay);
 }
 initialize();

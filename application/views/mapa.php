@@ -15,13 +15,17 @@
 		<div id="formularioMapa" class="row">
 			<div id="mapa" class='center-block'></div>
 		</div>
+		<div id="traçarRota">
+		<?php echo form_button(array("content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
+		</div>
 	</div>
+	<div id="lat"></div>
+	<div id="lng"></div>
 	<script src="js/markerclusterer.js"></script>
 	<script src="js/infobox.js"></script>
 	<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
 	<script src="<?php echo base_url ("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/mapa.js")?>"></script>
-
 	<script>
 		var idInfoBoxAberto;
 		var infoBox = [];
@@ -73,22 +77,6 @@
 			});
 		}
 		carregarPontos();
-
-		function displayRoute(origin, destination, service, display) {
-			service.route({
-				origin: origin,
-				destination: destination,
-				waypoints: [{location: 'Cocklebiddy, WA'}, {location: 'Broken Hill, NSW'}],
-				travelMode: google.maps.TravelMode.DRIVING,
-				avoidTolls: true
-			}, function(response, status) {
-				if (status === google.maps.DirectionsStatus.OK) {
-					display.setDirections(response);
-				} else {
-					alert('Could not display directions due to: ' + status);
-				}
-			});
-		}
 	</script>
 </body>
 </html>

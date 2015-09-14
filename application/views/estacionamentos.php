@@ -24,17 +24,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $c = 1; foreach ($parks as $park) :
+							<?php $c = 1; 
+							foreach ($parks as $park) :
 							$lat = $park['latitude'];
 							$long = $park['longitude'];
 							?>
-							<?php $end = "<script>enderecos(".$lat.",".$long.")</script>"?>
+							<?php $end = "<script>enderecos(".$lat.",".$long.",".$c.")</script>"?>
 							<tr>
-								<td><?= $park["nome"]?></td>
+								<td><?= $park["nome"]." ".$c?></td>
 								<td><?= $park["descricao"]?></td>
 								<td <?="id=ende".$c."" ?>><?= $end ?></td>
 							</tr>
-							<?php $c++; endforeach; ?>
+							<?php $c++; 
+							endforeach; 
+							?>
 						</tbody>
 					</table>
 					<div style="float:right;">

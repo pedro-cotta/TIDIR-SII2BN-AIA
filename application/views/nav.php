@@ -1,6 +1,5 @@
 
 <nav class="navbar navbar-default">
-
 	<div class="navbar-header">
 		<button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
 			<span class="sr-only">Navegação</span>
@@ -32,5 +31,9 @@
 			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 		</ul>
 	</div>
-	
 </nav>
+<script>
+	function pesquisa(){
+		
+	}
+</script>
