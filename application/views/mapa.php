@@ -17,8 +17,8 @@
 		</div>
 		<div id="traçarRota">
 			<?php echo form_open() ?>
-			<input type="text" class="form-control" id="inicial" value="">
-			<input type="text" class="form-control" id="destino" value="">
+			<input id="inicial" value="" type="hidden">
+			<input id="destino" value="" type="hidden">
 			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
 			<?php echo form_close(); ?>
 		</div>
