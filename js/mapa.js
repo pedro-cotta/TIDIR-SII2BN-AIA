@@ -9,7 +9,7 @@ var directionsService = new google.maps.DirectionsService();
 
 function initialize() {
 
-	directionsDisplay = new google.maps.DirectionsRenderer();
+	directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	var options = {
 		zoom: 16,
 		center: {lat: -19.918534, lng: -43.941391},
@@ -26,7 +26,7 @@ function initialize() {
 		};
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
-		document.getElementById('inicial').value = pos.lat+" "+pos.lng;
+		document.getElementById('inicial').value = "("+pos.lat+" "+pos.lng+")";
 
 		//var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
 		geocoder.geocode({'location': pos}, function(results, status) {

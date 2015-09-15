@@ -33,10 +33,6 @@
 		var idInfoBoxAberto;
 		var infoBox = [];
 		var markers = [];
-		var rendererOptions = {
-			suppressMarkers: true,
-			map: map
-		};
 
 		function abrirInfoBox(id, marker) {
 			if (typeof(idInfoBoxAberto) == 'string' && typeof(infoBox[idInfoBoxAberto]) == 'object') 
@@ -89,10 +85,10 @@
 }
 carregarPontos();
 
-$("form").submit(function(event) {
+/*$("form").submit(function(event) {
 
 
-	directionDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+	directionDisplay = new google.maps.DirectionsRenderer();
 
 	event.preventDefault();
 	infoBox[idInfoBoxAberto].close();
@@ -105,18 +101,32 @@ $("form").submit(function(event) {
 		travelMode: google.maps.TravelMode.DRIVING
 	};
 
-	for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-
 	directionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
-
-			var leg = result.routes[0].legs[0];
 
 			directionDisplay.setDirections(result);
 		}
 	});
+});*/
+
+$("form").submit(function(event) {
+
+	event.preventDefault();
+	infoBox[idInfoBoxAberto].close();
+	var enderecoPartida = $("#inicial").val();
+	var enderecoChegada = $("#destino").val();
+
+   var request = { //Novo objeto google.maps.DirectionsRequest, contendo:
+      origin: enderecoPartida, //origem
+      destination: enderecoChegada, //destino
+      travelMode: google.maps.TravelMode.DRIVING //meio de transporte, nesse caso, de carro
+  };
+
+  directionsService.route(request, function(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+        directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+     }
+ });
 });
 </script>
 </body>
