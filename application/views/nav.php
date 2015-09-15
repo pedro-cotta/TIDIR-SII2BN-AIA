@@ -22,11 +22,14 @@
 			</li>
 		</ul>
 		<form class="navbar-form navbar-left" role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Pesquisar">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="insira a chave de busca">
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-default"><b>Pesquisar</b></button>
+				</span>
 			</div>
-			<button type="submit" class="btn btn-default glyphicon glyphicon-search"></button>
 		</form>
+
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 		</ul>

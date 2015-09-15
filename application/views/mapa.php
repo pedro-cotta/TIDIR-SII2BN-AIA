@@ -11,6 +11,21 @@
 </head>
 <body>		
 	<?php $this->load->view('nav');?>
+	<div class="row">
+		<div class="col-md-2 well col-md-offset-1">
+			<h5 class="text-center">Filtro por KM</h5>
+			<input type="range" min="5" max="30" value="5" step="5" onchange="showValue(this.value)"/>
+			<span id="range">5KM</span>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function showValue(newValue)
+		{
+			document.getElementById("range").innerHTML=newValue+"KM";
+		}
+	</script>
+
 	<div class="container">
 		<div id="formularioMapa" class="row">
 			<div id="mapa" class='center-block'></div>
@@ -50,6 +65,16 @@
 				var latlngbounds = new google.maps.LatLngBounds();
 
 				$.each(pontos, function(index, ponto) {
+
+
+					var service = new google.maps.DistanceMatrixService();
+					service.getDistanceMatrix(
+					{
+						origins: [new google.maps.LatLng(ponto.latitude, ponto.longitude)],
+						destinations: [$("#inicial").val()],
+						travelMode: google.maps.TravelMode.DRIVING,
+					});
+
 					var marker = new google.maps.Marker({
 						position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
 						title: ponto.nome,
@@ -79,35 +104,11 @@
 					});
 				});
 
-				var markerCluster = new MarkerClusterer(map, markers);
+var markerCluster = new MarkerClusterer(map, markers);
 
-			});
+});
 }
 carregarPontos();
-
-/*$("form").submit(function(event) {
-
-
-	directionDisplay = new google.maps.DirectionsRenderer();
-
-	event.preventDefault();
-	infoBox[idInfoBoxAberto].close();
-	var enderecoPartida = $("#inicial").val();
-	var enderecoChegada = $("#destino").val();
-
-	var request = { 
-		origin: enderecoPartida, 
-		destination: enderecoChegada, 
-		travelMode: google.maps.TravelMode.DRIVING
-	};
-
-	directionsService.route(request, function(result, status) {
-		if (status == google.maps.DirectionsStatus.OK) {
-
-			directionDisplay.setDirections(result);
-		}
-	});
-});*/
 
 $("form").submit(function(event) {
 
@@ -125,8 +126,10 @@ $("form").submit(function(event) {
   directionsService.route(request, function(result, status) {
       if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
         directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
-     }
- });
+        var distanciaEmMetros = result.routes[0].legs[0].distance.value;
+        var distanciaEmKM = distanciaEmMetros/1000;
+    }
+});
 });
 </script>
 </body>

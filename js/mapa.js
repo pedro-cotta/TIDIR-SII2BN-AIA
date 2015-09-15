@@ -36,7 +36,6 @@ function initialize() {
 				};
 			};
 		});
-
 	});
 
 	markerInicial = new google.maps.Marker({
