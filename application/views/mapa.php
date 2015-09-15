@@ -17,8 +17,8 @@
 		</div>
 		<div id="traçarRota">
 			<?php echo form_open() ?>
-			<input id="inicial" value="" type="hidden">
-			<input id="destino" value="" type="hidden">
+			<input id="inicial" value="">
+			<input id="destino" value="">
 			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
 			<?php echo form_close(); ?>
 		</div>
@@ -33,6 +33,10 @@
 		var idInfoBoxAberto;
 		var infoBox = [];
 		var markers = [];
+		var rendererOptions = {
+			suppressMarkers: true,
+			map: map
+		};
 
 		function abrirInfoBox(id, marker) {
 			if (typeof(idInfoBoxAberto) == 'string' && typeof(infoBox[idInfoBoxAberto]) == 'object') 
@@ -74,25 +78,22 @@
 
 					$(document).ready(function () {
 						google.maps.event.addListener(marker, 'click', function () {
-							geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-								if (status == google.maps.GeocoderStatus.OK) {
-									if (results[1]) { 
-										$('#destino').val(results[1].formatted_address);
-									}
-								}
-							});
+							$('#destino').val(marker.position);
 						});
 					});
-
 				});
 
-var markerCluster = new MarkerClusterer(map, markers);
+				var markerCluster = new MarkerClusterer(map, markers);
 
-});
+			});
 }
 carregarPontos();
 
 $("form").submit(function(event) {
+
+
+	directionDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+
 	event.preventDefault();
 	infoBox[idInfoBoxAberto].close();
 	var enderecoPartida = $("#inicial").val();
@@ -104,9 +105,16 @@ $("form").submit(function(event) {
 		travelMode: google.maps.TravelMode.DRIVING
 	};
 
+	for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+
 	directionsService.route(request, function(result, status) {
-		if (status == google.maps.DirectionsStatus.OK) { 
-			directionsDisplay.setDirections(result); 
+		if (status == google.maps.DirectionsStatus.OK) {
+
+			var leg = result.routes[0].legs[0];
+
+			directionDisplay.setDirections(result);
 		}
 	});
 });
