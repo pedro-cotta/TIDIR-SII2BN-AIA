@@ -6,14 +6,9 @@ var options;
 var geocoder = new google.maps.Geocoder();
 var directionsService = new google.maps.DirectionsService();
 
+
 function initialize() {
-
-	var rendererOptions = {
-		suppresMarkers: true
-	}
-
-	directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
-
+	directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	var options = {
 		zoom: 16,
 		center: {lat: -19.918534, lng: -43.941391},
@@ -30,6 +25,7 @@ function initialize() {
 		};
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
+		document.getElementById('inicial').value = "("+pos.lat+" "+pos.lng+")";
 
 		var latlng = {lat: parseFloat(pos.lat), lng: parseFloat(pos.lng)}
 		geocoder.geocode({'location': latlng}, function(results, status) {
@@ -37,11 +33,8 @@ function initialize() {
 				if (results[1]) {
 					var endereco = results[1].formatted_address;
 				};
-				console.log(endereco);
-				document.getElementById('inicial').value = endereco;
 			};
 		});
-
 	});
 
 	markerInicial = new google.maps.Marker({

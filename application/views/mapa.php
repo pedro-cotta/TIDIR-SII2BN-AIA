@@ -11,6 +11,21 @@
 </head>
 <body>		
 	<?php $this->load->view('nav');?>
+	<div class="row">
+		<div class="col-md-2 well col-md-offset-1">
+			<h5 class="text-center">Filtro por KM</h5>
+			<input type="range" min="5" max="30" value="5" step="5" onchange="showValue(this.value)"/>
+			<span id="range">5KM</span>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function showValue(newValue)
+		{
+			document.getElementById("range").innerHTML=newValue+"KM";
+		}
+	</script>
+
 	<div class="container">
 		<div id="formularioMapa" class="row">
 			<div id="mapa" class='center-block'></div>
@@ -50,6 +65,16 @@
 				var latlngbounds = new google.maps.LatLngBounds();
 
 				$.each(pontos, function(index, ponto) {
+
+
+					var service = new google.maps.DistanceMatrixService();
+					service.getDistanceMatrix(
+					{
+						origins: [new google.maps.LatLng(ponto.latitude, ponto.longitude)],
+						destinations: [$("#inicial").val()],
+						travelMode: google.maps.TravelMode.DRIVING,
+					});
+
 					var marker = new google.maps.Marker({
 						position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
 						title: ponto.nome,
@@ -74,16 +99,9 @@
 
 					$(document).ready(function () {
 						google.maps.event.addListener(marker, 'click', function () {
-							geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
-								if (status == google.maps.GeocoderStatus.OK) {
-									if (results[1]) { 
-										$('#destino').val(results[1].formatted_address);
-									}
-								}
-							});
+							$('#destino').val(marker.position);
 						});
 					});
-
 				});
 
 var markerCluster = new MarkerClusterer(map, markers);
@@ -93,27 +111,26 @@ var markerCluster = new MarkerClusterer(map, markers);
 carregarPontos();
 
 $("form").submit(function(event) {
+
 	event.preventDefault();
 	infoBox[idInfoBoxAberto].close();
 	var enderecoPartida = $("#inicial").val();
 	var enderecoChegada = $("#destino").val();
 	console.log(enderecoPartida);
 
-	var request = { 
-		origin: enderecoPartida, 
-		destination: enderecoChegada, 
-		travelMode: google.maps.TravelMode.DRIVING
-	};
+   var request = { //Novo objeto google.maps.DirectionsRequest, contendo:
+      origin: enderecoPartida, //origem
+      destination: enderecoChegada, //destino
+      travelMode: google.maps.TravelMode.DRIVING //meio de transporte, nesse caso, de carro
+  };
 
-	directionsService.route(request, function(result, status) {
-		if (status == google.maps.DirectionsStatus.OK) { 
-			var markerInicio = new google.maps.Marker({
-
-
-			});
-			directionsDisplay.setDirections(result); 
-		}
-	});
+  directionsService.route(request, function(result, status) {
+      if (status == google.maps.DirectionsStatus.OK) { // Se deu tudo certo
+        directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
+        var distanciaEmMetros = result.routes[0].legs[0].distance.value;
+        var distanciaEmKM = distanciaEmMetros/1000;
+    }
+});
 });
 </script>
 </body>
