@@ -7,7 +7,13 @@ var geocoder = new google.maps.Geocoder();
 var directionsService = new google.maps.DirectionsService();
 
 function initialize() {
-	directionsDisplay = new google.maps.DirectionsRenderer();
+
+	var rendererOptions = {
+		suppresMarkers: true
+	}
+
+	directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+
 	var options = {
 		zoom: 16,
 		center: {lat: -19.918534, lng: -43.941391},
@@ -25,12 +31,13 @@ function initialize() {
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
 
-		//var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
-		geocoder.geocode({'location': pos}, function(results, status) {
+		var latlng = {lat: parseFloat(pos.lat), lng: parseFloat(pos.lng)}
+		geocoder.geocode({'location': latlng}, function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				if (results[1]) {
 					var endereco = results[1].formatted_address;
 				};
+				console.log(endereco);
 				document.getElementById('inicial').value = endereco;
 			};
 		});

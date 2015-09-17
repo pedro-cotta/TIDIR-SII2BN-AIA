@@ -17,8 +17,8 @@
 		</div>
 		<div id="traçarRota">
 			<?php echo form_open() ?>
-			<input id="inicial" value="" type="hidden">
-			<input id="destino" value="" type="hidden">
+			<input id="inicial" value="">
+			<input id="destino" value="">
 			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
 			<?php echo form_close(); ?>
 		</div>
@@ -97,6 +97,7 @@ $("form").submit(function(event) {
 	infoBox[idInfoBoxAberto].close();
 	var enderecoPartida = $("#inicial").val();
 	var enderecoChegada = $("#destino").val();
+	console.log(enderecoPartida);
 
 	var request = { 
 		origin: enderecoPartida, 
@@ -106,6 +107,10 @@ $("form").submit(function(event) {
 
 	directionsService.route(request, function(result, status) {
 		if (status == google.maps.DirectionsStatus.OK) { 
+			var markerInicio = new google.maps.Marker({
+
+
+			});
 			directionsDisplay.setDirections(result); 
 		}
 	});
