@@ -62,40 +62,42 @@
 
 				$.each(pontos, function(index, ponto) {
 					var pointB = ponto.latitude+" , "+ponto.longitude;
+					var filtro = parseInt($("#range").text());
+					console.log(filtro);
 
-					var marker = new google.maps.Marker({
-						position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
-						title: ponto.nome,
-						icon: 'img/marker.png',
-						map: map
-					});
-
-					var myOptions = {
-						content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
-						pixelOffset: new google.maps.Size(-150, 0)
-					};
-
-					infoBox[ponto.id] = new InfoBox(myOptions);
-					infoBox[ponto.id].marker = marker;
-
-					infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
-						abrirInfoBox(ponto.id, marker);
-					});
-
-					markers.push(marker);
-					latlngbounds.extend(marker.position);
-
-					$(document).ready(function () {
-						google.maps.event.addListener(marker, 'click', function () {
-							$('#destino').val(marker.position);
+					if (distancia(pointB) <= filtro) {
+						var marker = new google.maps.Marker({
+							position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
+							title: ponto.nome,
+							icon: 'img/marker.png',
+							map: map
 						});
-					});
+
+						var myOptions = {
+							content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
+							pixelOffset: new google.maps.Size(-150, 0)
+						};
+
+						infoBox[ponto.id] = new InfoBox(myOptions);
+						infoBox[ponto.id].marker = marker;
+
+						infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
+							abrirInfoBox(ponto.id, marker);
+						});
+
+						markers.push(marker);
+						latlngbounds.extend(marker.position);
+
+						$(document).ready(function () {
+							google.maps.event.addListener(marker, 'click', function () {
+								$('#destino').val(marker.position);
+							});
+						});
+
+						var markerCluster = new MarkerClusterer(map, markers);
+					};
 				});
-
-
-				var markerCluster = new MarkerClusterer(map, markers);
-
-			});
+});
 }carregarPontos();
 
 function distancia(pointB){
@@ -146,49 +148,9 @@ $("form").submit(function(event) {
 });
 
 $("#filtro").change(function(e){
-	clearMarkers();
 	deleteMarkers();
 	console.clear();
-	$.getJSON("<?php echo base_url('index.php/mapa/pegaPontos')?>", function(pontos) {
-
-		var latlngbounds = new google.maps.LatLngBounds();
-		var filtro = parseInt($("#range").text());
-
-		$.each(pontos, function(index, ponto) {
-			var pointB = ponto.latitude+" , "+ponto.longitude;
-
-			if (distancia(pointB) <= filtro) {
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
-					title: ponto.nome,
-					icon: 'img/marker.png',
-					map: map
-				});
-
-				var myOptions = {
-					content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
-					pixelOffset: new google.maps.Size(-150, 0)
-				};
-
-				infoBox[ponto.id] = new InfoBox(myOptions);
-				infoBox[ponto.id].marker = marker;
-
-				infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
-					abrirInfoBox(ponto.id, marker);
-				});
-
-				markers.push(marker);
-				latlngbounds.extend(marker.position);
-
-				$(document).ready(function () {
-					google.maps.event.addListener(marker, 'click', function () {
-						$('#destino').val(marker.position);
-					});
-				});
-				markerCluster = new MarkerClusterer(map, markers);
-			} 
-		});
-	});
+	carregarPontos();
 });
 </script>
 </body>
