@@ -57,6 +57,7 @@
 		}
 
 		function carregarPontos() {
+			deleteMarkers();
 			$.getJSON("<?php echo base_url('index.php/mapa/pegaPontos')?>", function(pontos) {
 				var latlngbounds = new google.maps.LatLngBounds();
 
@@ -65,7 +66,7 @@
 					var filtro = parseInt($("#range").text());
 					console.log(filtro);
 
-					if (distancia(pointB) <= filtro) {
+					if(distancia(pointB) <= filtro){
 						var marker = new google.maps.Marker({
 							position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
 							title: ponto.nome,
@@ -93,9 +94,7 @@
 								$('#destino').val(marker.position);
 							});
 						});
-
-						var markerCluster = new MarkerClusterer(map, markers);
-					};
+					}
 				});
 });
 }carregarPontos();
