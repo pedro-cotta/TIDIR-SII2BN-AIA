@@ -15,7 +15,7 @@
 		<div class="col-md-2 well col-md-offset-1">
 			<h5 class="text-center">Filtrar por distância</h5>
 			<span id="range">30KM</span>
-			<input id="filtro" type="range" min="5" max="30" value="30" step="5" onchange="showValue(this.value)"/>
+			<input id="filtro" type="range" min="1" max="30" value="30" step="1" onchange="showValue(this.value)"/>
 			
 		</div>
 	</div>
@@ -99,31 +99,31 @@
 }carregarPontos();
 
 function distancia(pointB){
-	navigator.geolocation.getCurrentPosition(function(position) {
-		var pointA = position.coords.latitude+" , "+position.coords.longitude;
+	var resultado = null;
+	var pointA = $("#inicial").val();
 
-		var r = 6371.0;
+	var r = 6371.0;
 
-		var pointA_data = pointA.split(',');
-		var pointB_data = pointB.split(',');
+	var pointA_data = pointA.split(',');
+	var pointB_data = pointB.split(',');
 
-		pointA_lat = parseFloat(pointA_data[0]) * Math.PI / 180.0;
-		pointA_lon = parseFloat(pointA_data[1]) * Math.PI / 180.0;
+	pointA_lat = parseFloat(pointA_data[0]) * Math.PI / 180.0;
+	pointA_lon = parseFloat(pointA_data[1]) * Math.PI / 180.0;
 
-		pointB_lat = parseFloat(pointB_data[0]) * Math.PI / 180.0;
-		pointB_lon = parseFloat(pointB_data[1]) * Math.PI / 180.0;
+	pointB_lat = parseFloat(pointB_data[0]) * Math.PI / 180.0;
+	pointB_lon = parseFloat(pointB_data[1]) * Math.PI / 180.0;
 
-		diff_lat = pointB_lat - pointA_lat;
-		diff_lon = pointB_lon - pointA_lon;
+	diff_lat = pointB_lat - pointA_lat;
+	diff_lon = pointB_lon - pointA_lon;
 
-		var a = Math.sin(diff_lat / 2) * Math.sin(diff_lat / 2) + 
-		Math.cos(pointA_lat) * Math.cos(pointB_lat) * 
-		Math.sin(diff_lon / 2) * Math.sin(diff_lon / 2);
+	var a = Math.sin(diff_lat / 2) * Math.sin(diff_lat / 2) + 
+	Math.cos(pointA_lat) * Math.cos(pointB_lat) * 
+	Math.sin(diff_lon / 2) * Math.sin(diff_lon / 2);
 
-		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-		console.log(Math.round(r * c)+"KM");
-	});
+	resultado = parseInt(Math.round(r * c));
+	return resultado;
 }
 
 $("form").submit(function(event) {
@@ -146,45 +146,48 @@ $("form").submit(function(event) {
 });
 
 $("#filtro").change(function(e){
+	clearMarkers();
 	deleteMarkers();
+	console.clear();
 	$.getJSON("<?php echo base_url('index.php/mapa/pegaPontos')?>", function(pontos) {
+
 		var latlngbounds = new google.maps.LatLngBounds();
-		var filtro = $("#range").text();
+		var filtro = parseInt($("#range").text());
 
 		$.each(pontos, function(index, ponto) {
 			var pointB = ponto.latitude+" , "+ponto.longitude;
 
-			distancia(pointB);
-
-			var marker = new google.maps.Marker({
-				position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
-				title: ponto.nome,
-				icon: 'img/marker.png',
-				map: map
-			});
-
-			var myOptions = {
-				content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
-				pixelOffset: new google.maps.Size(-150, 0)
-			};
-
-			infoBox[ponto.id] = new InfoBox(myOptions);
-			infoBox[ponto.id].marker = marker;
-
-			infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
-				abrirInfoBox(ponto.id, marker);
-			});
-
-			markers.push(marker);
-			latlngbounds.extend(marker.position);
-
-			$(document).ready(function () {
-				google.maps.event.addListener(marker, 'click', function () {
-					$('#destino').val(marker.position);
+			if (distancia(pointB) <= filtro) {
+				var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
+					title: ponto.nome,
+					icon: 'img/marker.png',
+					map: map
 				});
-			});
+
+				var myOptions = {
+					content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
+					pixelOffset: new google.maps.Size(-150, 0)
+				};
+
+				infoBox[ponto.id] = new InfoBox(myOptions);
+				infoBox[ponto.id].marker = marker;
+
+				infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
+					abrirInfoBox(ponto.id, marker);
+				});
+
+				markers.push(marker);
+				latlngbounds.extend(marker.position);
+
+				$(document).ready(function () {
+					google.maps.event.addListener(marker, 'click', function () {
+						$('#destino').val(marker.position);
+					});
+				});
+				markerCluster = new MarkerClusterer(map, markers);
+			} 
 		});
-		var markerCluster = new MarkerClusterer(map, markers);
 	});
 });
 </script>
