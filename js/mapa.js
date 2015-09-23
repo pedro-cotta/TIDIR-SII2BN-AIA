@@ -1,19 +1,20 @@
 'use strict'
 var map;
-var directionsDisplay;
+var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});;
 var markerInicial;
 var options;
 var geocoder = new google.maps.Geocoder();
 var directionsService = new google.maps.DirectionsService();
-
+var idInfoBoxAberto;
+var infoBox = [];
+var markers = [];
 
 function initialize() {
 
-	directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	var options = {
-		zoom: 16,
+		zoom: 14,
 		center: {lat: -19.918534, lng: -43.941391},
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
 
 	map = new google.maps.Map(document.getElementById("mapa"), options);
@@ -26,7 +27,7 @@ function initialize() {
 		};
 		markerInicial.setPosition(pos);
 		map.setCenter(pos);
-		document.getElementById('inicial').value = "("+pos.lat+" "+pos.lng+")";
+		document.getElementById('inicial').value = pos.lat+", "+pos.lng;
 
 		//var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
 		geocoder.geocode({'location': pos}, function(results, status) {
@@ -46,7 +47,21 @@ function initialize() {
 		animation:  google.maps.Animation.BOUNCE
 	});
 
-	console.log();
-
+	
 }
 initialize();
+
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
