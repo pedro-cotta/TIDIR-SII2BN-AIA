@@ -59,11 +59,6 @@
 						}
 					}));
 				})
-			},
-			select: function (event, ui) {
-				var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-				document.getElementById('latitude').value = ui.item.latitude;
-				document.getElementById('longitude').value = ui.item.longitude;
 			}
 		});
 	</script>
