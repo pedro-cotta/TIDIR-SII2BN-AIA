@@ -21,18 +21,24 @@ class estacionamentos extends CI_Controller{
 	public function novoEstacionamento()
 	{
 		$this->output->enable_profiler(FALSE);
-		if (empty($this->input->post('nome')) OR empty($this->input->post('descricao')) OR empty($this->input->post('latitude'))) {
+		if (empty($this->input->post('nome')) OR empty($this->input->post('descricao')) OR empty($this->input->post('coords'))) {
 			$this->session->set_flashdata("erro" , "erro");
 			redirect ("estacionamentos/cadastroEstacionamento");
 		}
-		 
+
+		$coords = str_replace("(","",$this->input->post('coords'));
+		$coords = str_replace(")","",$coords);
+		$lat = explode(",",$coords)[0];
+		$lng = explode(",",$coords)[1];
+
 		$dados = array(
 			'nome'=>$this->input->post('nome'),
 			'descricao'=>$this->input->post('descricao'),
-			'endereco'=>$thi->input->post('endereco'),
-			'latitude' => $this->input->post('latitude'),
-			'longitude' => $this->input->post('longitude')
+			'endereco'=>$this->input->post('endereco'),
+			'latitude' => $lat,
+			'longitude' => $lng
 			);
+
 		$this->load->model("estacionamento_model");
 		$parks = $this->estacionamento_model->novo($dados);
 
@@ -45,7 +51,7 @@ class estacionamentos extends CI_Controller{
 		{
 			$this->session->set_flashdata("erro" , "erro");
 			redirect ("estacionamentos/cadastroEstacionamento");
-		}	
+		}
 	}
 }
 

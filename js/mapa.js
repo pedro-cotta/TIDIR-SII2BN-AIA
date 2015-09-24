@@ -46,28 +46,48 @@ function initialize() {
 		animation:  google.maps.Animation.BOUNCE
 	});
 
+	$("#define-spot").autocomplete({
+		source: function (request, response) {
+			geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status) {
+				response($.map(results, function (item) {
+					return {
+						label: item.formatted_address,
+						value: item.formatted_address,
+						latitude: item.geometry.location.lat(),
+						longitude: item.geometry.location.lng()
+					}
+				}));
+			})
+		},
+		select: function (event, ui) {
+			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
+			markerInicial.setPosition(location);
+			map.setCenter(location);
+			map.setZoom(16);
+		}
+	});
 	
 }
 initialize();
 
 function setMapOnAll(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
-  }
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+	}
 }
 
 // Removes the markers from the map, but keeps them in the array.
 function clearMarkers() {
-  setMapOnAll(null);
+	setMapOnAll(null);
 }
 
 // Shows any markers currently in the array.
 function showMarkers() {
-  setMapOnAll(map);
+	setMapOnAll(map);
 }
 
 // Deletes all markers in the array by removing references to them.
 function deleteMarkers() {
-  clearMarkers();
-  markers = [];
+	clearMarkers();
+	markers = [];
 }

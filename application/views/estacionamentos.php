@@ -27,13 +27,11 @@
 							<?php $c = 1; 
 							foreach ($parks as $park) :
 							$lat = $park['latitude'];
-							$long = $park['longitude'];
-							?>
-							<?php $end = "<script>enderecos(".$lat.",".$long.",".$c.")</script>"?>
+							$long = $park['longitude'];?>
 							<tr>
-								<td><?= $park["nome"]." ".$c?></td>
+								<td><?= $park["nome"]?></td>
 								<td><?= $park["descricao"]?></td>
-								<td <?="id=ende".$c."" ?>><?= $end ?></td>
+								<td><?= $park["endereco"] ?></td>
 							</tr>
 							<?php $c++; 
 							endforeach; 

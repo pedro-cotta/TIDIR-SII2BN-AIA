@@ -27,13 +27,13 @@
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
 					<div class="form-group">
 						<?php echo form_label("Nome","nome");?>
-						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control","rules" => "required"));?>
+						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
 					</div>
 
 					<div id="boxCampos" class="form-group">
 						<?php echo form_label("Endereço :","endereco");?>
 						<label>CEP</label>
-						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","rules" => "required"));?>
+						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control"));?>
 
 						<label>UF</label>
 						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
@@ -62,10 +62,9 @@
 					</div>
 
 					<div>
-						<input id="latitude" name="latitude" type="hidden">
-						<input id="longitude" name="longitude" type="hidden">
+						<input id="coords" name="coords" type="hidden">
 					</div>
-					<?php echo form_button(array("content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
+					<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
 					<?php echo form_close() ?>
 					<?php echo form_open("estacionamentos");?>
 					<?php echo form_button(array("content" => "Voltar","type" => "submit","class" => "btn btn-link form-control"));?>
@@ -78,32 +77,50 @@
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
 	<script>
-			$("#cep").blur(function(){
-                    var cep     = $(this).val().replace(/[^0-9]/, '');
-                    var boxes   = $("#boxCampos");
-                    if(cep !== ""){
-                         var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
-                         $.getJSON(url, function(json){
-                                $("#rua").val(json.logradouro);
-                                $("#bairro").val(json.bairro);
-                                $("#cidade").val(json.localidade);
-                                $("#uf").val(json.uf);
-                            	}).fail(function(){
-                             console.log('CEP inexistente');
-                        });
 
-                    }
+		$("#cep").bind('blur keyup change',function(e){
+			var cep     = $(this).val();
+			if(cep !== ""){
+				var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
+				$.getJSON(url, function(json){
+					$("#rua").val(json.logradouro);
+					$("#bairro").val(json.bairro);
+					$("#cidade").val(json.localidade);
+					$("#uf").val(json.uf);
+					$("#numero").focus();
+				}).fail(function(){
+					console.log('CEP inexistente');
+					$("#rua").val(" ");
+					$("#bairro").val(" ");
+					$("#cidade").val(" ");
+					$("#uf").val(" ");
+					$(this).focus();
+				});
 
-                });
+			}
+		});
 
-			$("#descricao").blur(function(){
-				var uf = $("#uf").val();
-				var cidade = $("#cidade").val();
-				var bairro = $("#bairro").val();
-				var rua = $("#rua").val();
-				var numero = $("#numero").val();
-				 $("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
+		$("#numero").bind('keyup change',function(e){
+			var uf = $("#uf").val();
+			var cidade = $("#cidade").val();
+			var bairro = $("#bairro").val();
+			var rua = $("#rua").val();
+			var numero = $("#numero").val();
+			$("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
+		});
+
+		$("#descricao").bind('keyup blur change',function(e){
+			var geocoder = new google.maps.Geocoder();
+			var endereco = $('#endereco').val();
+			geocoder.geocode({'address': endereco }, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					if (results[0]) { 
+						$('#coords').val(results[0].geometry.location);
+					}
+				};
 			});
+		});
+
 	</script>
 </body>
 </html>

@@ -19,19 +19,19 @@
 	<div class="row">
 		<div class="col-md-4">
 			<h5 class="text-center">Filtrar por distância</h5>
-			<input id="filtro" type="range" min="1" max="10" value="10" step="1" onchange="showValue(this.value)"/>
-			<p id="range" class="text-right">10KM</p>
+			<input id="filtro" type="range" min="0" max="2000" value="0" step="100" onchange="showValue(this.value)"/>
+			<p id="range" class="text-right">0 Metros</p>
 		</div>
 
 		<script type="text/javascript">
 			function showValue(newValue)
 			{
-				document.getElementById("range").innerHTML=newValue+"KM";
+				document.getElementById("range").innerHTML=newValue+" Metros";
 			}
 		</script>
 
 		<div class="col-md-4" id="traçarRota">
-			<?php echo form_open() ?>
+			<?php echo form_open(array("id" => "rota")) ?>
 			<input id="inicial" value="" type="hidden">
 			<input id="destino" value="" type="hidden">
 			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="col-md-4" id="local">
-			<?php echo form_open() ?>
+			<?php echo form_open(array("id" => "spot")) ?>
 			<?php echo form_button(array("id" => "define-spot","content" => "Definir Local","type" => "submit","class" => "btn btn-primary"));?>
 			<input id="local" value="" class="form-control">
 			<?php echo form_close(); ?>
@@ -91,10 +91,6 @@
 				$.each(pontos, function(index, ponto) {
 					var pointB = ponto.latitude+" , "+ponto.longitude;
 					var filtro = parseInt($("#range").text());
-
-					if (filtro == 10) {
-						filtro = 5000;
-					}
 
 					if(distancia(pointB) <= filtro){
 						var marker = new google.maps.Marker({
@@ -151,11 +147,11 @@ function distancia(pointB){
 
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-	resultado = parseInt(Math.round(r * c));
+	resultado = parseInt(Math.round(r * c)*1000);
 	return resultado;
 }
 
-$("form").submit(function(e) {
+$("#rota").submit(function(e) {
 	e.preventDefault();
 	infoBox[idInfoBoxAberto].close();
 	var enderecoPartida = $("#inicial").val();
