@@ -115,7 +115,6 @@
 						infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
 							abrirInfoBox(ponto.id, marker);
 						});
-
 						markers.push(marker);
 						latlngbounds.extend(marker.position);
 
@@ -132,7 +131,6 @@
 function distancia(pointB){
 	var resultado = null;
 	var pointA = $("#inicial").val();
-
 	var r = 6371.0;
 
 	var pointA_data = pointA.split(',');

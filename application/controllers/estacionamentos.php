@@ -29,6 +29,7 @@ class estacionamentos extends CI_Controller{
 		$dados = array(
 			'nome'=>$this->input->post('nome'),
 			'descricao'=>$this->input->post('descricao'),
+			'endereco'=>$thi->input->post('endereco'),
 			'latitude' => $this->input->post('latitude'),
 			'longitude' => $this->input->post('longitude')
 			);

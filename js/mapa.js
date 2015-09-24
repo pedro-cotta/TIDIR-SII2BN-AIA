@@ -10,9 +10,8 @@ var infoBox = [];
 var markers = [];
 
 function initialize() {
-
 	var options = {
-		zoom: 14,
+		zoom: 5,
 		center: {lat: -19.918534, lng: -43.941391},
 		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
@@ -29,8 +28,8 @@ function initialize() {
 		map.setCenter(pos);
 		document.getElementById('inicial').value = pos.lat+", "+pos.lng;
 
-		//var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)}
-		geocoder.geocode({'location': pos}, function(results, status) {
+		var latlng = {lat: parseFloat(pos.lat), lng: parseFloat(pos.lng)}
+		geocoder.geocode({'location': latlng}, function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				if (results[1]) {
 					var endereco = results[1].formatted_address;
