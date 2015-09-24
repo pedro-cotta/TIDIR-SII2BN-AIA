@@ -66,15 +66,6 @@
 
 				$.each(pontos, function(index, ponto) {
 
-
-					var service = new google.maps.DistanceMatrixService();
-					service.getDistanceMatrix(
-					{
-						origins: [new google.maps.LatLng(ponto.latitude, ponto.longitude)],
-						destinations: [$("#inicial").val()],
-						travelMode: google.maps.TravelMode.DRIVING,
-					});
-
 					var marker = new google.maps.Marker({
 						position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
 						title: ponto.nome,
@@ -116,7 +107,6 @@ $("form").submit(function(event) {
 	infoBox[idInfoBoxAberto].close();
 	var enderecoPartida = $("#inicial").val();
 	var enderecoChegada = $("#destino").val();
-	console.log(enderecoPartida);
 
    var request = { //Novo objeto google.maps.DirectionsRequest, contendo:
       origin: enderecoPartida, //origem
@@ -129,6 +119,7 @@ $("form").submit(function(event) {
         directionsDisplay.setDirections(result); // Renderizamos no mapa o resultado
         var distanciaEmMetros = result.routes[0].legs[0].distance.value;
         var distanciaEmKM = distanciaEmMetros/1000;
+        console.log(distanciaEmKM+"KM");
     }
 });
 });
