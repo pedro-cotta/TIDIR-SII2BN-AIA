@@ -27,18 +27,40 @@
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
 					<div class="form-group">
 						<?php echo form_label("Nome","nome");?>
-						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
+						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control","rules" => "required"));?>
+					</div>
+
+					<div id="boxCampos" class="form-group">
+						<?php echo form_label("Endereço :","endereco");?>
+						<label>CEP</label>
+						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","rules" => "required"));?>
+
+						<label>UF</label>
+						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
+
+						<label>Cidade</label>
+						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control"));?>
+						
+						<label>Bairro</label>
+						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control"));?>
+
+						<label>Rua</label>
+						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control"));?>
+
+						<label>Nº</label>
+						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
+
+						<label>Complemento</label>
+						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
+						
+						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control"));?>
 					</div>
 
 					<div class="form-group">
 						<?php echo form_label("Descrição","descricao");?>
-						<?php echo form_input(array("id" => "descricao","name" => "descricao","class" => "form-control"));?>
+						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control"));?>
 					</div>
 
-					<div class="form-group">
-						<?php echo form_label("Endereço","endereco");?>
-						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control"));?>
-					</div>
 					<div>
 						<input id="latitude" name="latitude" type="hidden">
 						<input id="longitude" name="longitude" type="hidden">
@@ -56,26 +78,32 @@
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
 	<script>
-		var geocoder = new google.maps.Geocoder();
-		$("#endereco").autocomplete({
-			source: function (request, response) {
-				geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status) {
-					response($.map(results, function (item) {
-						return {
-							label: item.formatted_address,
-							value: item.formatted_address,
-							latitude: item.geometry.location.lat(),
-							longitude: item.geometry.location.lng()
-						}
-					}));
-				})
-			},
-			select: function (event, ui) {
-				var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-				document.getElementById('latitude').value = ui.item.latitude;
-				document.getElementById('longitude').value = ui.item.longitude;
-			}
-		});
+			$("#cep").blur(function(){
+                    var cep     = $(this).val().replace(/[^0-9]/, '');
+                    var boxes   = $("#boxCampos");
+                    if(cep !== ""){
+                         var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
+                         $.getJSON(url, function(json){
+                                $("#rua").val(json.logradouro);
+                                $("#bairro").val(json.bairro);
+                                $("#cidade").val(json.localidade);
+                                $("#uf").val(json.uf);
+                            	}).fail(function(){
+                             console.log('CEP inexistente');
+                        });
+
+                    }
+
+                });
+
+			$("#descricao").blur(function(){
+				var uf = $("#uf").val();
+				var cidade = $("#cidade").val();
+				var bairro = $("#bairro").val();
+				var rua = $("#rua").val();
+				var numero = $("#numero").val();
+				 $("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
+			});
 	</script>
 </body>
 </html>
