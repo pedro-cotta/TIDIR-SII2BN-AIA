@@ -13,8 +13,8 @@
 	<?php $this->load->view('nav');?>
 	<div class="container">
 		<div id="formularioCadastro" class="row">
-			<div class="col-md-4 well col-md-offset-4">
-				<div class="col-md-10 col-md-offset-1">
+			<div class="col-md-12 well col-md-offset-0">
+				<div class="col-md-12 col-md-offset-0">
 					<h2 id="textoCadastro" class="text-center">Cadastro de Estacionamento</h2>
 					<div>
 						<?php if ($this->session->flashdata("sucesso")) {?>
@@ -25,12 +25,12 @@
 						<?php } ?>
 					</div>
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
-					<div class="form-group">
-						<?php echo form_label("*Nome","nome");?>
+					<div class="row form-group col-md-12">
+						<?php echo form_label("*Nome: ","nome");?>
 						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
 					</div>
 
-					<div id="boxCampos" class="form-group">
+					<div class="row form-group col-md-5">
 						<label>CEP</label>
 						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control"));?>
 
@@ -55,14 +55,14 @@
 						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control"));?>
 					</div>
 
-					<div class="form-group">
+					<div class="row form-group col-md-5">
 						<?php echo form_label("*Descrição","descricao");?>
 						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control"));?>
+						<div>
+							<input id="coords" name="coords">
+						</div>
 					</div>
 
-					<div>
-						<input id="coords" name="coords">
-					</div>
 					<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
 					<?php echo form_close() ?>
 					<?php echo form_open("estacionamentos");?>
@@ -75,7 +75,9 @@
 	<script src="<?php echo base_url("js/jquery.min.js");?>"></script>
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
+	<script src="//cdn.ckeditor.com/4.5.1/full/ckeditor.js"></script>
 	<script>
+		CKEDITOR.replace('descricao',{ height: 200 });
 
 		$("#cep").bind('blur keyup change',function(e){
 			var cep     = $(this).val();
@@ -108,7 +110,7 @@
 			$("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
 		});
 
-		$("#descricao").bind('keyup blur change',function(e){
+		$("#numero").bind('keyup blur change',function(e){
 			var geocoder = new google.maps.Geocoder();
 			var endereco = $('#endereco').val();
 			geocoder.geocode({'address': endereco }, function(results, status) {
@@ -119,7 +121,6 @@
 				};
 			});
 		});
-
 	</script>
 </body>
 </html>
