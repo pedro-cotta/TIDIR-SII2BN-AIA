@@ -30,7 +30,7 @@
 							$long = $park['longitude'];?>
 							<tr>
 								<td><?= $park["nome"]?></td>
-								<td><?= $park["descricao"]?></td>
+								<td><?=html_escape($park["descricao"]) ?></td>
 								<td><?= $park["endereco"] ?></td>
 							</tr>
 							<?php $c++; 

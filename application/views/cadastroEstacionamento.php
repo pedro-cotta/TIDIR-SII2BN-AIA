@@ -13,9 +13,9 @@
 	<?php $this->load->view('nav');?>
 	<div class="container">
 		<div id="formularioCadastro" class="row">
-			<div class="col-md-12 well col-md-offset-0">
-				<div class="col-md-12 col-md-offset-0">
-					<h2 id="textoCadastro" class="text-center">Cadastro de Estacionamento</h2>
+			<div class="col-md-10 well col-md-offset-1">
+				<div class="col-md-12 col-md-offset-1">
+					<h2 id="textoCadastro" class="row form-group col-md-offset-2">Cadastro de Estacionamento</h2>
 					<div>
 						<?php if ($this->session->flashdata("sucesso")) {?>
 						<p class="text-success"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com secesso.</p>
@@ -25,7 +25,7 @@
 						<?php } ?>
 					</div>
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
-					<div class="row form-group col-md-12">
+					<div class="row form-group col-md-10">
 						<?php echo form_label("*Nome: ","nome");?>
 						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
 					</div>
@@ -33,41 +33,50 @@
 					<div class="row form-group col-md-5">
 						<label>CEP</label>
 						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control"));?>
-
-						<label>*UF</label>
-						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
-
-						<label>*Cidade</label>
-						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control"));?>
-						
-						<label>*Bairro</label>
-						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control"));?>
-
-						<label>*Rua</label>
-						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control"));?>
-
-						<label>*Nº</label>
-						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
-
-						<label>*Complemento</label>
-						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
-						
-						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control"));?>
 					</div>
 
+					<div class="form-group col-md-5">
+						<label>*UF</label>
+						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
+					</div>
 					<div class="row form-group col-md-5">
+						<label>*Cidade</label>
+						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control"));?>
+					</div>
+					<div class="form-group col-md-5">
+						<label>*Bairro</label>
+						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control"));?>
+					</div>
+					<div class="row form-group col-md-4">
+						<label>*Rua</label>
+						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control"));?>
+					</div>
+					<div class="form-group col-md-3">
+						<label>*Nº</label>
+						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
+					</div>
+					<div class="form-group col-md-3">
+						<label>*Complemento</label>
+						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
+
+						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control","type" => "hidden"));?>
+					</div>
+
+					<div class="row form-group col-md-10">
 						<?php echo form_label("*Descrição","descricao");?>
 						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control"));?>
 						<div>
-							<input id="coords" name="coords">
+							<input id="coords" name="coords" type="hidden">
 						</div>
 					</div>
 
-					<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
-					<?php echo form_close() ?>
-					<?php echo form_open("estacionamentos");?>
-					<?php echo form_button(array("content" => "Voltar","type" => "submit","class" => "btn btn-link form-control"));?>
-					<?php echo form_close() ?>
+					<div class="row form-group col-md-10">
+						<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
+						<?php echo form_close() ?>
+						<?php echo form_open("estacionamentos");?>
+						<?php echo form_button(array("content" => "Voltar","type" => "submit","class" => "btn btn-link form-control"));?>
+						<?php echo form_close() ?>
+					</div>
 				</div>
 			</div>
 		</div>
