@@ -11,7 +11,7 @@ var markers = [];
 
 function initialize() {
 	var options = {
-		zoom: 5,
+		zoom: 12,
 		center: {lat: -19.918534, lng: -43.941391},
 		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
@@ -45,27 +45,6 @@ function initialize() {
 		title: 'Posição Atual',
 		animation:  google.maps.Animation.BOUNCE
 	});
-
-	$("#define-spot").autocomplete({
-		source: function (request, response) {
-			geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status) {
-				response($.map(results, function (item) {
-					return {
-						label: item.formatted_address,
-						value: item.formatted_address,
-						latitude: item.geometry.location.lat(),
-						longitude: item.geometry.location.lng()
-					}
-				}));
-			})
-		},
-		select: function (event, ui) {
-			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-			markerInicial.setPosition(location);
-			map.setCenter(location);
-			map.setZoom(16);
-		}
-	});
 	
 }
 initialize();
@@ -91,3 +70,24 @@ function deleteMarkers() {
 	clearMarkers();
 	markers = [];
 }
+
+$("#define-spot").autocomplete({
+	source: function (request, response) {
+		geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status) {
+			response($.map(results, function (item) {
+				return {
+					label: item.formatted_address,
+					value: item.formatted_address,
+					latitude: item.geometry.location.lat(),
+					longitude: item.geometry.location.lng()
+				}
+			}));
+		})
+	},
+	select: function (event, ui) {
+		var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
+		markerInicial.setPosition(location);
+		map.setCenter(location);
+		map.setZoom(16);
+	}
+});

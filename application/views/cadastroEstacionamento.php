@@ -26,43 +26,42 @@
 					</div>
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
 					<div class="form-group">
-						<?php echo form_label("Nome","nome");?>
+						<?php echo form_label("*Nome","nome");?>
 						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
 					</div>
 
 					<div id="boxCampos" class="form-group">
-						<?php echo form_label("Endereço :","endereco");?>
 						<label>CEP</label>
 						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control"));?>
 
-						<label>UF</label>
+						<label>*UF</label>
 						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
 
-						<label>Cidade</label>
+						<label>*Cidade</label>
 						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control"));?>
 						
-						<label>Bairro</label>
+						<label>*Bairro</label>
 						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control"));?>
 
-						<label>Rua</label>
+						<label>*Rua</label>
 						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control"));?>
 
-						<label>Nº</label>
+						<label>*Nº</label>
 						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
 
-						<label>Complemento</label>
+						<label>*Complemento</label>
 						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
 						
 						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control"));?>
 					</div>
 
 					<div class="form-group">
-						<?php echo form_label("Descrição","descricao");?>
+						<?php echo form_label("*Descrição","descricao");?>
 						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control"));?>
 					</div>
 
 					<div>
-						<input id="coords" name="coords" type="hidden">
+						<input id="coords" name="coords">
 					</div>
 					<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
 					<?php echo form_close() ?>
