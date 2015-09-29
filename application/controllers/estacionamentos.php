@@ -42,6 +42,18 @@ class estacionamentos extends CI_Controller{
 		$this->load->model("estacionamento_model");
 		$parks = $this->estacionamento_model->novo($dados);
 
+		$precos = array(
+			'id_estacionamento'=>$parks,
+			'15min'=> str_replace(",",".",$this->input->post('15min')),
+			'30min'=>str_replace(",",".",$this->input->post('30min')),
+			'phora'=>str_replace(",",".",$this->input->post('hora')),
+			'Hsub'=>str_replace(",",".",$this->input->post('sHora')),
+			'diaria'=>str_replace(",",".",$this->input->post('diaria')),
+			'pernoite'=>str_replace(",",".",$this->input->post('pernoite'))
+			);
+
+		$this->estacionamento_model->npreco($precos);
+
 		if ($parks) 
 		{
 			$this->session->set_flashdata("sucesso" , "sucesso");
@@ -51,6 +63,29 @@ class estacionamentos extends CI_Controller{
 		{
 			$this->session->set_flashdata("erro" , "erro");
 			redirect ("estacionamentos/cadastroEstacionamento");
+		}
+	}
+
+	public function editarEstacionamento()
+	{
+		$id = $this->input->get("id");
+		echo "terça feira";
+	}
+
+	public function excluirEstacionamento()
+	{
+		$id = $this->input->get("id");
+		$this->load->model("estacionamento_model");
+		$result = $this->estacionamento_model->excluir($id);
+		if ($result) 
+		{
+			$this->session->set_flashdata("sucesso" , "sucesso");
+			redirect ("estacionamentos");
+		} 
+		elseif (!$result) 
+		{
+			$this->session->set_flashdata("erro" , "erro");
+			redirect ("estacionamentos");
 		}
 	}
 }

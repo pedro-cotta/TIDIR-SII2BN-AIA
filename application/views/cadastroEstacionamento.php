@@ -18,10 +18,10 @@
 					<h2 id="textoCadastro" class="row form-group col-md-offset-2">Cadastro de Estacionamento</h2>
 					<div>
 						<?php if ($this->session->flashdata("sucesso")) {?>
-						<p class="text-success"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com secesso.</p>
+						<p class="text-success col-md-offset-2"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com secesso.</p>
 						<?php }
 						if ($this->session->flashdata("erro")) {?>
-						<p class="text-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> Verifique as informações necessárias.</p>
+						<p class="text-danger col-md-offset-2"><span class="glyphicon glyphicon-exclamation-sign"></span> Verifique as informações necessárias.</p>
 						<?php } ?>
 					</div>
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
@@ -32,7 +32,7 @@
 
 					<div class="row form-group col-md-5">
 						<label>CEP</label>
-						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control"));?>
+						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","type" => "number","placeholder" => "Digite seu CEP, sem traços ou espaços"));?>
 					</div>
 
 					<div class="form-group col-md-5">
@@ -56,10 +56,37 @@
 						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
 					</div>
 					<div class="form-group col-md-3">
-						<label>*Complemento</label>
+						<label>Complemento</label>
 						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
 
 						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control","type" => "hidden"));?>
+					</div>
+					<div class="col-md-9 well" id="preco">
+						<h4 class="row">Preços</h4>
+						<div class="col-md-3">
+							<label>15 minutos</label>
+							<?php echo form_input(array("id" => "15min","name" => "15min","class" => "form-control preco"));?>
+						</div>
+						<div class="col-md-3">
+							<label>30 minutos</label>
+							<?php echo form_input(array("id" => "30min","name" => "30min","class" => "form-control preco"));?>
+						</div>
+						<div class="col-md-3">
+							<label>1ª Hora</label>
+							<?php echo form_input(array("id" => "hora","name" => "hora","class" => "form-control preco"));?>
+						</div>
+						<div class="col-md-3">
+							<label>Hora Subsequente</label>
+							<?php echo form_input(array("id" => "sHora","name" => "sHora","class" => "form-control preco"));?>
+						</div>
+						<div class="col-md-3">
+							<label>Diária</label>
+							<?php echo form_input(array("id" => "diaria","name" => "diaria","class" => "form-control preco"));?>
+						</div>
+						<div class="col-md-3">
+							<label>Pernoite</label>
+							<?php echo form_input(array("id" => "pernoite","name" => "pernoite","class" => "form-control preco"));?>
+						</div>
 					</div>
 
 					<div class="row form-group col-md-10">
@@ -84,12 +111,13 @@
 	<script src="<?php echo base_url("js/jquery.min.js");?>"></script>
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
-	<script src="//cdn.ckeditor.com/4.5.1/full/ckeditor.js"></script>
+	<script src="//cdn.ckeditor.com/4.5.1/standard/ckeditor.js"></script>
 	<script>
 		CKEDITOR.replace('descricao',{ height: 200 });
 
 		$("#cep").bind('blur keyup change',function(e){
-			var cep     = $(this).val();
+			var cep = $('#cep').val().replace('-', '');
+			console.log(cep);
 			if(cep !== ""){
 				var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
 				$.getJSON(url, function(json){
