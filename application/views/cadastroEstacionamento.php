@@ -63,29 +63,47 @@
 					</div>
 					<div class="col-md-9 well" id="preco">
 						<h4 class="row">Preços</h4>
-						<div class="col-md-3">
-							<label>15 minutos</label>
-							<?php echo form_input(array("id" => "15min","name" => "15min","class" => "form-control preco"));?>
+
+						<div class="col-md-3" style="padding:3px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">R$</span>
+								<?= form_input(array('id'=>'15min','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'15 Minutos')) ?>
+							</div>
 						</div>
-						<div class="col-md-3">
-							<label>30 minutos</label>
-							<?php echo form_input(array("id" => "30min","name" => "30min","class" => "form-control preco"));?>
+
+						<div class="col-md-3" style="padding:3px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">R$</span>
+								<?= form_input(array('id'=>'30min','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'30 Minutos')) ?>
+							</div>
 						</div>
-						<div class="col-md-3">
-							<label>1ª Hora</label>
-							<?php echo form_input(array("id" => "hora","name" => "hora","class" => "form-control preco"));?>
+
+						<div class="col-md-3" style="padding:3px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">R$</span>
+								<?= form_input(array('id'=>'hora','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'1ª Hora')) ?>
+							</div>
 						</div>
-						<div class="col-md-3">
-							<label>Hora Subsequente</label>
-							<?php echo form_input(array("id" => "sHora","name" => "sHora","class" => "form-control preco"));?>
+
+						<div class="col-md-3" style="padding:3px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">R$</span>
+								<?= form_input(array('id'=>'sHora','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Hora Subsequente')) ?>
+							</div>
 						</div>
-						<div class="col-md-3">
-							<label>Diária</label>
-							<?php echo form_input(array("id" => "diaria","name" => "diaria","class" => "form-control preco"));?>
+
+						<div class="col-md-3" style="padding:3px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">R$</span>
+								<?= form_input(array('id'=>'diaria','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Diária')) ?>
+							</div>
 						</div>
-						<div class="col-md-3">
-							<label>Pernoite</label>
-							<?php echo form_input(array("id" => "pernoite","name" => "pernoite","class" => "form-control preco"));?>
+
+						<div class="col-md-3" style="padding:3px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1">R$</span>
+								<?= form_input(array('id'=>'pernoite','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Pernoite')) ?>
+							</div>
 						</div>
 					</div>
 
