@@ -10,15 +10,15 @@ class estacionamentos extends CI_Controller{
 		$usuario=$this->usuarios_model->buscaEmailSenha($email, $senha);
 
 		if ($usuario) {
-
-			$this->session->set_userdata("usuario_logado" , $usuario);
+			echo "OK OK";
+			/*$this->session->set_userdata("usuario_logado" , $usuario);
 			$this->session->set_flashdata("success", "Logado com sucesso");
-			redirect ("welcome");
+			redirect ("estacionamentos");*/
 		}
 		else{
-
-			$this->session->set_flashdata("danger" , "x");
-			redirect("welcome");
+			echo "mal mal";
+			/*$this->session->set_flashdata("danger" , "x");
+			redirect("estacionamentos");*/
 		}
 	}
 

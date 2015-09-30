@@ -36,6 +36,7 @@
 	</div>
 </nav>
 
+
 <div id="login" class="modal fade" role="dialog" style="padding-top:10%;">
 	<div class="modal-dialog">
 		<!-- Modal content-->
@@ -44,19 +45,19 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title text-center">Login</h4>
 			</div>
-
+			<?php echo form_open('usuarios/autenticar') ?>
 			<div class="modal-body">
 				<div style="margin-left: calc(50% - 131px);">
 					<div class="">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Login</span>
-							<?= form_input(array('id'=>'login','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1')) ?>
+							<?= form_input(array('name'=>'login','id'=>'login','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1')) ?>
 						</div>
 					</div>
 					<div class="text-center" style="padding-top:3px;">
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1">Senha</span>
-							<?= form_input(array('id'=>'senha','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1')) ?>
+							<?= form_input(array('name'=>'senha','id'=>'senha','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1')) ?>
 						</div>
 					</div>
 				</div>
@@ -66,8 +67,11 @@
 				<div style="text-align:center">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Entrar</button>
 				</div>
+				<?php echo form_close() ?>
 				<div style="text-align:center">
+					<?php echo form_open('usuarios/esqueci') ?>
 					<button type="button" class="btn btn-link" data-dismiss="modal">Esqueci minha Senha</button>
+					<?php echo form_close() ?>
 				</div>
 			</div>
 		</div>
@@ -76,6 +80,6 @@
 
 <script>
 	function pesquisa(){
-		
+
 	}
 </script>
