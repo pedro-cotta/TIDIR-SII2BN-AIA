@@ -53,6 +53,10 @@ h1,h2,h3,h4,h5,h6 {
 	left: 138px; 
 }
 
+.input-group-addon {
+	width:65px;
+	text-align:center;
+}
 
 
 

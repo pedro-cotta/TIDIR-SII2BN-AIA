@@ -16,8 +16,8 @@
 </head>
 <body>		
 	<?php $this->load->view('nav');?>
-	<div class="row">
-		<div class="col-md-4">
+	<div class="container">
+		<div class="col-md-3">
 			<h5 class="text-center">Filtrar por distância</h5>
 			<input id="filtro" type="range" min="0" max="2000" value="2000" step="10" onchange="showValue(this.value)"/>
 			<p id="range" class="text-right">50000 Metros</p>
@@ -34,15 +34,14 @@
 			<?php echo form_open() ?>
 			<input id="inicial" value="-19.9166813, -43.9344931">
 			<input id="destino" value="">
-			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "btn btn-primary"));?>
+			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "rota btn btn-primary"));?>
 			<?php echo form_close(); ?>
 		</div>
 
 		<div class="col-md-4">
 			<input id="local" value="" class="form-control" placeholder="Definir outro local">
 		</div>
-	</div>
-	<div class="container">
+
 		<div id="formularioMapa" class="row">
 			<div id="mapa" class='center-block'></div>
 		</div>
