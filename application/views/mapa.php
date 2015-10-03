@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="<?php echo base_url("css/bootstrap.min.css");?>">
 	<link rel="stylesheet" href="<?php echo base_url("css/main.css");?>">
 	<script src="<?php echo base_url("js/jquery.min.js");?>"></script>
+	<script src="<?php echo base_url ("js/jquery.min.js");?>"></script>
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
@@ -28,6 +29,10 @@
 		{
 			document.getElementById("range").innerHTML=newValue+" Metros";
 		}
+		function showValue(newValue)
+		{
+			document.getElementById("range").innerHTML=newValue+" Metros";
+		}
 		</script>
 
 		<div class="col-md-4" id="traçarRota">
@@ -35,6 +40,7 @@
 			<input id="inicial" value="-19.9166813, -43.9344931">
 			<input id="destino" value="">
 			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "button","class" => "rota btn btn-primary"));?>
+			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "rota btn btn-primary"));?>
 			<?php echo form_close(); ?>
 		</div>
 
@@ -49,8 +55,6 @@
 	<script src="js/markerclusterer.js"></script>
 	<script src="js/infobox.js"></script>
 	<script src="<?php echo base_url("js/mapa.js")?>"></script>
-
-	
 	<script>
 	var directionDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 
@@ -146,16 +150,114 @@
 					infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
 						abrirInfoBox(ponto.id, marker);
 					});
-markers.push(marker);
-latlngbounds.extend(marker.position);
+					markers.push(marker);
+					latlngbounds.extend(marker.position);
 
-$(document).ready(function () {
-	google.maps.event.addListener(marker, 'click', function () {
-		$('#destino').val(marker.position);
+					$(document).ready(function () {
+						google.maps.event.addListener(marker, 'click', function () {
+							$('#destino').val(marker.position);
+						});
+					});
+				}
+			});
+function abrirInfoBox(id, marker) {
+	if (typeof(idInfoBoxAberto) == 'string' && typeof(infoBox[idInfoBoxAberto]) == 'object') 
+	{
+		infoBox[idInfoBoxAberto].close();
+	}
+
+	infoBox[id].open(map, marker);
+	idInfoBoxAberto = id;
+}
+
+function distancia(pointB){
+	var resultado = null;
+	var pointA = $("#inicial").val();
+	var r = 6371.0;
+
+	var pointA_data = pointA.split(',');
+	var pointB_data = pointB.split(',');
+
+	pointA_lat = parseFloat(pointA_data[0]) * Math.PI / 180.0;
+	pointA_lon = parseFloat(pointA_data[1]) * Math.PI / 180.0;
+
+	pointB_lat = parseFloat(pointB_data[0]) * Math.PI / 180.0;
+	pointB_lon = parseFloat(pointB_data[1]) * Math.PI / 180.0;
+
+	diff_lat = pointB_lat - pointA_lat;
+	diff_lon = pointB_lon - pointA_lon;
+
+	var a = Math.sin(diff_lat / 2) * Math.sin(diff_lat / 2) + 
+	Math.cos(pointA_lat) * Math.cos(pointB_lat) * 
+	Math.sin(diff_lon / 2) * Math.sin(diff_lon / 2);
+
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	resultado = parseInt(Math.round(r * c)*1000);
+	return resultado;
+}
+
+$("form").submit(function(e) {
+	e.preventDefault();
+	infoBox[idInfoBoxAberto].close();
+	var enderecoPartida = $("#inicial").val();
+	var enderecoChegada = $("#destino").val();
+
+	var request = {
+		origin: enderecoPartida,
+		destination: enderecoChegada,
+		travelMode: google.maps.TravelMode.DRIVING
+	};
+
+	directionsService.route(request, function(result, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(result);
+		}
 	});
 });
-}
+
+$("#filtro").change(function(e){
+	carregarPontos();
 });
+
+function carregarPontos() {
+	deleteMarkers();
+	$.getJSON("<?php echo base_url('index.php/mapa/pegaPontos')?>", function(pontos) {
+		var latlngbounds = new google.maps.LatLngBounds();
+
+		$.each(pontos, function(index, ponto) {
+			var pointB = ponto.latitude+" , "+ponto.longitude;
+			var filtro = parseInt($("#range").text());
+
+			if(distancia(pointB) <= filtro){
+				var marker = new google.maps.Marker({
+					position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
+					title: ponto.nome,
+					icon: 'img/marker.png',
+					map: map
+				});
+
+				var myOptions = {
+					content:"<h5 class='text-center text-uppercase'><b>"+ponto.nome+"</h5></b>"+' '+"<p>"+ponto.descricao+"</p>",
+					pixelOffset: new google.maps.Size(-150, 0)
+				};
+
+				infoBox[ponto.id] = new InfoBox(myOptions);
+				infoBox[ponto.id].marker = marker;
+
+				infoBox[ponto.id].listener = google.maps.event.addListener(marker, 'click', function (e) {
+					abrirInfoBox(ponto.id, marker);
+				});
+				markers.push(marker);
+				latlngbounds.extend(marker.position);
+
+				$(document).ready(function () {
+					google.maps.event.addListener(marker, 'click', function () {
+						$('#destino').val(marker.position);
+					});
+				});
+			}
+		});
 });
 }carregarPontos();
 
@@ -171,10 +273,30 @@ $(document).ready(function () {
 						longitude: item.geometry.location.lng()
 					}
 				}));
+			})
+		},
+		select: function (event, ui) {
+			limpaRotas()
+			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
+			var pos = {
+				lat: ui.item.latitude,
+				lng: ui.item.longitude
+			};
+			$("#inicial").val(pos.lat+", "+pos.lng);
+			carregarPontos();
+			markerInicial.setPosition(location);
+			map.setCenter(location);
+			map.setZoom(16);
+		}
+	});
+});
+
+function limpaRotas(){
+	directionDisplay.setMap(null);
+}
 })
 },
 select: function (event, ui) {
-	limpaRotas()
 	var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
 	var pos = {
 		lat: ui.item.latitude,
@@ -188,10 +310,6 @@ select: function (event, ui) {
 }
 });
 });
-
-function limpaRotas(){
-	directionDisplay.setMap(null);
-}
 </script>
 </body>
 </html>

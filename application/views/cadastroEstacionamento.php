@@ -130,6 +130,7 @@
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
 	<script src="//cdn.ckeditor.com/4.5.1/full/ckeditor.js"></script>
+	<script src="//cdn.ckeditor.com/4.5.1/standard/ckeditor.js"></script>
 	<script>
 		CKEDITOR.replace('descricao',{ height: 200 });
 

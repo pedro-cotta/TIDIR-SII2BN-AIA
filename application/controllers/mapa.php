@@ -3,17 +3,22 @@ class mapa extends CI_Controller{
 
 	public function index()
 	{
-		$this->load->view("mapa");
-	}
 
-	public function pegaPontos()
-	{
-		$this->load->model("mapa_model");
-		$pontos = $this->mapa_model->pontos();
-		$dadosJson = json_encode($pontos);
-		$dados = array(
-			'pontos' => $pontos
-			);
-		$this->load->view('teste', $dados);
+		public function index(){
+			$this->load->view("mapa");
+		}
+
+		public function pegaPontos()
+		{
+			$this->load->model("mapa_model");
+			$pontos = $this->mapa_model->pontos();
+			$dadosJson = json_encode($pontos);
+			$dados = array(
+				'pontos' => $pontos
+				);
+			$this->load->view('teste', $dados);
+
+			echo json_encode($pontos);
+		}
 	}
 }

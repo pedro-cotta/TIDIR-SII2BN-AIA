@@ -10,32 +10,36 @@ class estacionamento_model extends CI_Model
 		} else {
 			$this->db->where('id_dono', $this->session->userdata("usuario_logado")['id_usuario']);
 		}
-		$this->db->join('precos', 'precos.id_estacionamento = parks.id');
-		return $this->db->get()->result_array();
-	}
 
-	public function novo($dados)
-	{
-		$this->db->insert('parks', $dados);
-		return $this->db->insert_id();
-	}
+		public function meus()
+		{
+			$this->db->select('*');
+			$this->db->from('parks');
+			$this->db->join('precos', 'precos.id_estacionamento = parks.id');
+			return $this->db->get()->result_array();
+		}
 
-	public function npreco($dados)
-	{
-		return $this->db->insert('precos', $dados);
-	}
+		public function novo($dados)
+		{
+			$this->db->insert('parks', $dados);
+			return $this->db->insert_id();
+		}
 
-	public function excluir($id)
-	{
-		$this->db->where('id', $id);
-		return $this->db->delete('parks'); 
-	}
+		public function npreco($dados)
+		{
+			return $this->db->insert('precos', $dados);
+		}
 
-	public function editar($id, $dados)
-	{
-		$this->db->update('parks', $dados);
-		$this->db->where('id', $id);
-	}
+		public function excluir($id)
+		{
+			$this->db->where('id', $id);
+			return $this->db->delete('parks'); 
+		}
 
-}
+		public function editar($id, $dados)
+		{
+			$this->db->update('parks', $dados);
+			$this->db->where('id', $id);
+		}
+	}
 
