@@ -40,7 +40,6 @@
 							$long = $park['longitude'];?>
 							<tr>
 								<td><?= $park["nome_park"]?></td>
-								<td><?= $park["nome"]?></td>
 								<td><?= $park["descricao"] ?></td>
 								<td><?= $park["endereco"] ?></td>
 								<td>
@@ -56,10 +55,6 @@
 									<?= anchor("estacionamentos/editarEstacionamento?id={$park['id']}", "<span id='editar' class='text-right glyphicon glyphicon-pencil' style='cursor:pointer;font-size:25px;margin-top:10px'></span>"); ?>
 									<br>
 									<?= anchor("estacionamentos/excluirEstacionamento?id={$park['id']}", "<span id='excluir' class='text-right glyphicon glyphicon-trash' style='cursor:pointer;font-size:25px;margin-top:20px'></span>"); ?>
-
-									<?= anchor("estacionamentos/editarEstacionamento?id={$park['id']}", "<span id='editar' class='text-right glyphicon glyphicon-pencil' style='color:blue;cursor:pointer;font-size:50px;margin-top:10px'></span>"); ?>
-									<br>
-									<?= anchor("estacionamentos/excluirEstacionamento?id={$park['id']}", "<span id='excluir' class='text-right glyphicon glyphicon-trash' style='color:red;cursor:pointer;font-size:50px;margin-top:30px'></span>"); ?>
 
 								</td>
 							</tr>
