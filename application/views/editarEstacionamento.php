@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Cadastro de Estacionamento</title>
+	<title>Editar Estacionamento</title>
 	<link rel="stylesheet" href="<?php echo base_url("js/jquery-ui.css");?>">
 	<link rel="stylesheet" href="<?php echo base_url("css/bootstrap.min.css");?>">
 	<link rel="stylesheet" href="<?php echo base_url("css/main.css");?>">
@@ -131,51 +131,51 @@
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
 	<script src="//cdn.ckeditor.com/4.5.1/full/ckeditor.js"></script>
 	<script>
-		CKEDITOR.replace('descricao',{ height: 200 });
+	CKEDITOR.replace('descricao',{ height: 200 });
 
-		$("#cep").bind('blur keyup change',function(e){
-			var cep = $('#cep').val().replace('-', '');
-			console.log(cep);
-			if(cep !== ""){
-				var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
-				$.getJSON(url, function(json){
-					$("#rua").val(json.logradouro);
-					$("#bairro").val(json.bairro);
-					$("#cidade").val(json.localidade);
-					$("#uf").val(json.uf);
-					$("#numero").focus();
-				}).fail(function(){
-					console.log('CEP inexistente');
-					$("#rua").val(" ");
-					$("#bairro").val(" ");
-					$("#cidade").val(" ");
-					$("#uf").val(" ");
-					$(this).focus();
-				});
-
-			}
-		});
-
-		$("#numero").bind('keyup change',function(e){
-			var uf = $("#uf").val();
-			var cidade = $("#cidade").val();
-			var bairro = $("#bairro").val();
-			var rua = $("#rua").val();
-			var numero = $("#numero").val();
-			$("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
-		});
-
-		$("#numero").bind('keyup blur change',function(e){
-			var geocoder = new google.maps.Geocoder();
-			var endereco = $('#endereco').val();
-			geocoder.geocode({'address': endereco }, function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					if (results[0]) { 
-						$('#coords').val(results[0].geometry.location);
-					}
-				};
+	$("#cep").bind('blur keyup change',function(e){
+		var cep = $('#cep').val().replace('-', '');
+		console.log(cep);
+		if(cep !== ""){
+			var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
+			$.getJSON(url, function(json){
+				$("#rua").val(json.logradouro);
+				$("#bairro").val(json.bairro);
+				$("#cidade").val(json.localidade);
+				$("#uf").val(json.uf);
+				$("#numero").focus();
+			}).fail(function(){
+				console.log('CEP inexistente');
+				$("#rua").val(" ");
+				$("#bairro").val(" ");
+				$("#cidade").val(" ");
+				$("#uf").val(" ");
+				$(this).focus();
 			});
+
+		}
+	});
+
+	$("#numero").bind('keyup change',function(e){
+		var uf = $("#uf").val();
+		var cidade = $("#cidade").val();
+		var bairro = $("#bairro").val();
+		var rua = $("#rua").val();
+		var numero = $("#numero").val();
+		$("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
+	});
+
+	$("#numero").bind('keyup blur change',function(e){
+		var geocoder = new google.maps.Geocoder();
+		var endereco = $('#endereco').val();
+		geocoder.geocode({'address': endereco }, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				if (results[0]) { 
+					$('#coords').val(results[0].geometry.location);
+				}
+			};
 		});
+	});
 	</script>
 </body>
 </html>
