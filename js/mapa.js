@@ -1,6 +1,6 @@
 'use strict'
 var map;
-var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});;
+var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 var markerInicial;
 var options;
 var geocoder = new google.maps.Geocoder();
