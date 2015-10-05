@@ -34,7 +34,7 @@
 			<?php echo form_open() ?>
 			<input id="inicial" value="-19.9166813, -43.9344931">
 			<input id="destino" value="">
-			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "submit","class" => "rota btn btn-primary"));?>
+			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "button","class" => "rota btn btn-primary"));?>
 			<?php echo form_close(); ?>
 		</div>
 
@@ -89,7 +89,7 @@
 			return resultado;
 		}
 
-		$("form").submit(function(e) {
+		$("#trace-route").bind('click', function(e) {
 			e.preventDefault();
 			infoBox[idInfoBoxAberto].close();
 			var enderecoPartida = $("#inicial").val();
@@ -114,6 +114,7 @@
 
 		function carregarPontos() {
 			deleteMarkers();
+			
 			$.getJSON("<?php echo base_url('index.php/mapa/pegaPontos')?>", function(pontos) {
 				var latlngbounds = new google.maps.LatLngBounds();
 
@@ -181,6 +182,11 @@ $(document).ready(function () {
 		}
 	});
 });
+
+function limparRotas(){
+	directionsDisplay.setMap(map);
+	directionsDisplay = map;
+}
 </script>
 </body>
 </html>
