@@ -14,6 +14,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
+					<div style="float:right;">
+						<?=anchor("estacionamentos/cadastroEstacionamento","<span class='glyphicon glyphicon-plus-sign'></span> Novo Estacionamento");?>
+					</div>
 					<table class="table table-hover" id="table_original">
 						<thead>
 							<tr>
@@ -63,9 +66,6 @@
 							?>
 						</tbody>
 					</table>
-					<div style="float:right;">
-						<?=anchor("estacionamentos/cadastroEstacionamento","Novo Estacionamento");?>
-					</div>
 				</div>
 			</div>
 		</div>
