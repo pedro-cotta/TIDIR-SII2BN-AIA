@@ -16,41 +16,59 @@
 </head>
 <body>		
 	<?php $this->load->view('nav');?>
-	<div class="container">
-		<div class="col-md-3">
-			<h5 class="text-center">Filtrar por distância</h5>
-			<input id="filtro" type="range" min="0" max="2000" value="2000" step="10" onchange="showValue(this.value)"/>
-			<p id="range" class="text-right">50000 Metros</p>
+	<div>
+
+		<div id="formularioMapa">
+			<div id="mapa" class='center-block'></div>
+		</div>
+
+		<div class="row col-md-3 well" id="filtro">
+
+			<h4 class="text-center" style="background-color:red;color:white;">Filtros</h4>
+			<div class="col-md-12">
+				<input id="filtroD" type="range" min="0" max="2000" value="2000" step="10" onchange="showValueD(this.value)"/>
+				<p id="rangeD" class="text-right">50000 Metros</p>
+			</div>
+			<hr style="width:100%;color:#e7e7e7;height:1px;background-color:#e7e7e7;margin-top:70px;">
+			<div class="col-md-12">
+				<input id="filtroP" type="range" min="0" max="50" value="50" step="2" onchange="showValueP(this.value)"/>
+				<p id="rangeP" class="text-right">R$ 50,00</p>
+			</div>
+
+			<div class="col-md-12">
+				<input id="local" value="" class="form-control" placeholder="Definir outro local">
+			</div>
+
+			<div class="col-md-6 row col-md-offset-3" id="traçarRota">
+				<?php echo form_open() ?>
+				<input id="inicial" value="-19.9166813, -43.9344931" type="hidden">
+				<input id="destino" value="" type="hidden">
+				<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "button","class" => "rota btn btn-primary"));?>
+				<?php echo form_close(); ?>
+			</div>
+
 		</div>
 
 		<script type="text/javascript">
-		function showValue(newValue)
+		function showValueD(newValue)
 		{
-			document.getElementById("range").innerHTML=newValue+" Metros";
+			document.getElementById("rangeD").innerHTML=newValue+" Metros";
+		}
+		
+		function showValueP(newValue)
+		{
+			document.getElementById("rangeP").innerHTML="R$ "+newValue+",00";
 		}
 		</script>
-
-		<div class="col-md-4" id="traçarRota">
-			<?php echo form_open() ?>
-			<input id="inicial" value="-19.9166813, -43.9344931">
-			<input id="destino" value="">
-			<?php echo form_button(array("id" => "trace-route","content" => "Traçar Rota","type" => "button","class" => "rota btn btn-primary"));?>
-			<?php echo form_close(); ?>
-		</div>
-
-		<div class="col-md-4">
-			<input id="local" value="" class="form-control" placeholder="Definir outro local">
-		</div>
-
-		<div id="formularioMapa" class="row">
-			<div id="mapa" class='center-block'></div>
-		</div>
 	</div>
 	<script src="js/markerclusterer.js"></script>
 	<script src="js/infobox.js"></script>
 	<script src="<?php echo base_url("js/mapa.js")?>"></script>
 	<script>
 	var directionDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+
+	var filtro = $("#filtro");
+	map.controls[google.maps.ControlPosition.RIGHT_TOP].push(filtro[0]);
 
 	function abrirInfoBox(id, marker) {
 		if (typeof(idInfoBoxAberto) == 'string' && typeof(infoBox[idInfoBoxAberto]) == 'object') 
@@ -109,8 +127,13 @@
 		});
 	});
 
-	$("#filtro").change(function(e){
-		limpaRotas()
+	$("#filtroD").change(function(e){
+		limpaRotas();
+		carregarPontos();
+	});
+
+	$("#filtroP").change(function(e){
+		limpaRotas();
 		carregarPontos();
 	});
 
@@ -121,9 +144,14 @@
 
 			$.each(pontos, function(index, ponto) {
 				var pointB = ponto.latitude+" , "+ponto.longitude;
-				var filtro = parseInt($("#range").text());
+				var filtroD = parseInt($("#rangeD").text());
+				var filtroP = parseInt($("#rangeP").text());
+				console.log(filtroP);
+				preco = parseFloat(ponto.phora);
+				console.log(preco);
 
-				if(distancia(pointB) <= filtro){
+				if(distancia(pointB) <= filtroD){
+					
 					var marker = new google.maps.Marker({
 						position: new google.maps.LatLng(ponto.latitude, ponto.longitude),
 						title: ponto.nome,
@@ -153,6 +181,7 @@
 						});
 					});
 				}
+				
 			});
 });
 }carregarPontos();
@@ -166,37 +195,6 @@ function abrirInfoBox(id, marker) {
 	infoBox[id].open(map, marker);
 	idInfoBoxAberto = id;
 }
-
-function distancia(pointB){
-	var resultado = null;
-	var pointA = $("#inicial").val();
-	var r = 6371.0;
-
-	var pointA_data = pointA.split(',');
-	var pointB_data = pointB.split(',');
-
-	pointA_lat = parseFloat(pointA_data[0]) * Math.PI / 180.0;
-	pointA_lon = parseFloat(pointA_data[1]) * Math.PI / 180.0;
-
-	pointB_lat = parseFloat(pointB_data[0]) * Math.PI / 180.0;
-	pointB_lon = parseFloat(pointB_data[1]) * Math.PI / 180.0;
-
-	diff_lat = pointB_lat - pointA_lat;
-	diff_lon = pointB_lon - pointA_lon;
-
-	var a = Math.sin(diff_lat / 2) * Math.sin(diff_lat / 2) + 
-	Math.cos(pointA_lat) * Math.cos(pointB_lat) * 
-	Math.sin(diff_lon / 2) * Math.sin(diff_lon / 2);
-
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-	resultado = parseInt(Math.round(r * c)*1000);
-	return resultado;
-}
-
-$("#filtro").change(function(e){
-	carregarPontos();
-});
 
 $(document).ready(function () {
 	$("#local").autocomplete({

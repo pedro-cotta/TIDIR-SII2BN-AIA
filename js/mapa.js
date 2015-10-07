@@ -13,7 +13,8 @@ function initialize() {
 	var options = {
 		zoom: 12,
 		center: {lat: -19.918534, lng: -43.941391},
-		mapTypeId: google.maps.MapTypeId.TERRAIN
+		mapTypeId: google.maps.MapTypeId.TERRAIN,
+		disableDefaultUI: true
 	};
 
 	map = new google.maps.Map(document.getElementById("mapa"), options);
@@ -45,7 +46,6 @@ function initialize() {
 		title: 'Posição Atual',
 		animation:  google.maps.Animation.BOUNCE
 	});
-	
 }
 initialize();
 
