@@ -1,0 +1,79 @@
+#servicos{
+	> #servicos__itens{
+		> .servicos__item{
+			@include make-xs-column(12);
+			@include make-sm-column(6);
+			@include make-md-column(3);
+
+			cursor: pointer;
+			min-height: 150px;
+			background-color: #ccc;
+			background-clip:content-box;
+			margin-bottom:30px;
+			> a{
+				display: block;
+				height: 150px;
+				width: 100%;
+				text-align: center;
+				position: relative;
+				> span.title{
+					color: #fff;
+					font: 26px $font_main;
+					position: absolute;
+					width: 100%;
+					text-align: center;
+					bottom: 24px;
+					display: none;
+				}
+				&:hover > span.title{
+					display: block;
+				}
+				> span.icon{
+					display: inline-block;
+					position: relative;
+					transition: top 0.5s linear;
+					@extend .sprite_servicos;
+
+					&.icon--config{
+						@include sprite-define(70px, 70px, -5px, -97px);
+						top:(150px-70px)/2;
+					}
+					&.icon--mapa{
+						@include sprite-define(70px, 57px, -5px, -343px);
+						top:(150px-57px)/2;
+					}
+					&.icon--termos{
+						@include sprite-define(70px, 63px, -5px, -604px);
+						top:(150px-63px)/2;
+					}
+					&.icon--tarifas{
+						@include sprite-define(70px, 53px, -5px, -477px);
+						top:(150px-53px)/2;
+					}
+				}
+				&:hover > span.icon{
+					top: 20px !important;
+					transition: top 0.5s linear;
+					&.icon--config{
+						@include sprite-define(70px, 70px, -5px, -177px);
+					}
+					&.icon--mapa{
+						@include sprite-define(70px, 57px, -5px, -410px);
+					}
+					&.icon--termos{
+						@include sprite-define(70px, 63px, -5px, -676px);
+					}
+					&.icon--tarifas{
+						@include sprite-define(70px, 53px, -5px, -540px);
+					}
+				}
+			}
+			&:hover{
+				background-color: $heading_tarja_color;
+			}
+			&, &:hover{
+				transition: all 0.5s linear;
+			}
+		}
+	}
+}
