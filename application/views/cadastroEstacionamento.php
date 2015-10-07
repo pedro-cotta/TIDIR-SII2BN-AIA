@@ -14,6 +14,17 @@
 	<div class="container">
 		<div id="formularioCadastro" class="row">
 			<div class="col-md-10 well col-md-offset-1">
+
+				<div class="text-right">
+					<div class="btn-group">
+						<span id="info" style='cursor:pointer;font-size:20px;margin-top:10px' class="glyphicon glyphicon-info-sign dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ></span>
+						
+						<ul class="dropdown-menu dropdown-menu-right">
+							<h4 class="text-center">Informações</h4>
+						</ul>
+					</div>
+				</div>
+
 				<div class="col-md-12 col-md-offset-1">
 					<h2 id="textoCadastro" class="row form-group col-md-offset-2">Cadastro de Estacionamento</h2>
 					<div>
@@ -25,43 +36,51 @@
 						<?php } ?>
 					</div>
 					<?php echo form_open("estacionamentos/novoEstacionamento");?>
-					<div class="row form-group col-md-10">
-						<?php echo form_label("*Nome: ","nome");?>
-						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
+
+					<div class="col-md-10 well">
+						<?php echo form_label("Nome: ","nome");?>
+						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control","value" => set_value('nome')));?>
+						<?php echo form_error('nome'); ?>
 					</div>
 
-					<div class="row form-group col-md-5">
-						<label>CEP</label>
-						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","type" => "number","placeholder" => "Digite seu CEP, sem traços ou espaços"));?>
+					<div class="form-group col-md-5" style="padding-left:0;">
+						<label for="cep">CEP</label>
+						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","type" => "number","placeholder" => "Digite seu CEP, sem traços ou espaços","value" => set_value('cep')));?>
+						<?php echo form_error('cep'); ?>
 					</div>
 
-					<div class="form-group col-md-5">
-						<label>*UF</label>
-						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
+					<div class="form-group col-md-5" style="padding-right:0;">
+						<label for="uf">UF</label>
+						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control","value" => set_value('uf')));?>
+						<?php echo form_error('uf'); ?>
 					</div>
-					<div class="row form-group col-md-5">
-						<label>*Cidade</label>
-						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control"));?>
+					<div class=" form-group col-md-5" style="padding-left:0;">
+						<label for="cidade">Cidade</label>
+						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control","value" => set_value('cidade')));?>
+						<?php echo form_error('cidade'); ?>
 					</div>
-					<div class="form-group col-md-5">
-						<label>*Bairro</label>
-						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control"));?>
+					<div class="form-group col-md-5" style="padding-right:0;">
+						<label form="bairro">Bairro</label>
+						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control","value" => set_value('bairro')));?>
+						<?php echo form_error('bairro'); ?>
 					</div>
-					<div class="row form-group col-md-4">
-						<label>*Rua</label>
-						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control"));?>
+					<div class=" form-group col-md-4" style="padding-left:0;">
+						<label form="rua">Rua</label>
+						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control","value" => set_value('rua')));?>
+						<?php echo form_error('rua'); ?>
 					</div>
 					<div class="form-group col-md-3">
-						<label>*Nº</label>
-						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
+						<label form="numero">Nº</label>
+						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control","value" => set_value('numero')));?>
+						<?php echo form_error('numero'); ?>
 					</div>
-					<div class="form-group col-md-3">
-						<label>Complemento</label>
+					<div class="form-group col-md-3" style="padding-right:0;">
+						<label form="complemento">Complemento</label>
 						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
 
 						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control","type" => "hidden"));?>
 					</div>
-					<div class="col-md-9 well" id="preco">
+					<div class="col-md-10 well" id="preco">
 						<h4 class="row">Preços</h4>
 
 						<div class="col-md-3" style="padding:3px;">
@@ -107,15 +126,16 @@
 						</div>
 					</div>
 
-					<div class="row form-group col-md-10">
-						<?php echo form_label("*Descrição","descricao");?>
-						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control"));?>
+					<div class="form-group col-md-10">
+						<?php echo form_label("Descrição","descricao");?>
+						<?php echo form_error('descricao'); ?>
+						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control","value" => set_value('descricao')));?>
 						<div>
 							<input id="coords" name="coords" type="hidden">
 						</div>
 					</div>
 
-					<div class="row form-group col-md-10">
+					<div class="form-group col-md-10">
 						<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
 						<?php echo form_close() ?>
 						<?php echo form_open("estacionamentos");?>
@@ -135,7 +155,6 @@
 
 		$("#cep").bind('blur keyup change',function(e){
 			var cep = $('#cep').val().replace('-', '');
-			console.log(cep);
 			if(cep !== ""){
 				var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
 				$.getJSON(url, function(json){
@@ -145,11 +164,10 @@
 					$("#uf").val(json.uf);
 					$("#numero").focus();
 				}).fail(function(){
-					console.log('CEP inexistente');
-					$("#rua").val(" ");
-					$("#bairro").val(" ");
-					$("#cidade").val(" ");
-					$("#uf").val(" ");
+					$("#rua").val("");
+					$("#bairro").val("");
+					$("#cidade").val("");
+					$("#uf").val("");
 					$(this).focus();
 				});
 

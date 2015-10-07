@@ -1,21 +1,15 @@
 <?php
 class estacionamento_model extends CI_Model
 {
-	public function listarEstacionamentos($id)
-	{
-		//$this->db->select('*');
-		//$this->db->from('parks');
-		if ($id != 'batata') {
-			$this->db->where('id', $id);
-		} else {
-			$this->db->where('id_dono', $this->session->userdata("usuario_logado")['id_usuario']);
-		}
-	}
-
-	public function meus()
+	public function listarEstacionamentos($id, $rota)
 	{
 		$this->db->select('*');
 		$this->db->from('parks');
+		if ($rota == 'batata') {
+			$this->db->where('id_dono', $id);
+		} else {
+			$this->db->where('id', $id);
+		}
 		$this->db->join('precos', 'precos.id_estacionamento = parks.id');
 		return $this->db->get()->result_array();
 	}
@@ -26,9 +20,16 @@ class estacionamento_model extends CI_Model
 		return $this->db->insert_id();
 	}
 
-	public function npreco($dados)
+	public function npreco($dados, $id_estacionamento)
 	{
-		return $this->db->insert('precos', $dados);
+		if ($id_estacionamento != null) {
+			$this->db->insert('precos', $dados);
+		} else {
+			$this->db->update('precos', $dados);
+			$this->db->where('id_estacionamento', $id_estacionamento);
+		}
+		
+		
 	}
 
 	public function excluir($id)

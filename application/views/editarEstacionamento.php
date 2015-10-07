@@ -18,105 +18,114 @@
 					<h2 id="textoCadastro" class="row form-group col-md-offset-2">Cadastro de Estacionamento</h2>
 					<div>
 						<?php if ($this->session->flashdata("sucesso")) {?>
-						<p class="text-success col-md-offset-2"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com secesso.</p>
+						<p class="text-success col-md-offset-2"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastro efetuado com sucesso.</p>
 						<?php }
 						if ($this->session->flashdata("erro")) {?>
 						<p class="text-danger col-md-offset-2"><span class="glyphicon glyphicon-exclamation-sign"></span> Verifique as informações necessárias.</p>
 						<?php } ?>
 					</div>
-					<?php echo form_open("estacionamentos/novoEstacionamento");?>
-					<div class="row form-group col-md-10">
-						<?php echo form_label("*Nome: ","nome");?>
-						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control"));?>
+				
+					<?php echo form_open("estacionamentos/editarEstacionamento?id={$park[0]['id']}");?>
+
+					<div class="col-md-10 well">
+						<?php echo form_label("Nome: ","nome");?>
+						<?php echo form_input(array("id" => "nome","name" => "nome","class" => "form-control","value" => $park[0]["nome"]));?>
+						<?php echo form_error('nome'); ?>
 					</div>
 
-					<div class="row form-group col-md-5">
-						<label>CEP</label>
-						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","type" => "number","placeholder" => "Digite seu CEP, sem traços ou espaços"));?>
+					<div class="form-group col-md-5" style="padding-left:0;">
+						<label for="cep">CEP</label>
+						<?php echo form_input(array("id" => "cep","name" => "cep","class" => "form-control","type" => "number","placeholder" => "Digite seu CEP, sem traços ou espaços","value" => set_value('cep')));?>
+						<?php echo form_error('cep'); ?>
 					</div>
 
-					<div class="form-group col-md-5">
-						<label>*UF</label>
-						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control"));?>
+					<div class="form-group col-md-5" style="padding-right:0;">
+						<label for="uf">UF</label>
+						<?php echo form_input(array("id" => "uf","name" => "uf","class" => "form-control","value" => $park[0]["uf"]));?>
+						<?php echo form_error('uf'); ?>
 					</div>
-					<div class="row form-group col-md-5">
-						<label>*Cidade</label>
-						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control"));?>
+					<div class=" form-group col-md-5" style="padding-left:0;">
+						<label for="cidade">Cidade</label>
+						<?php echo form_input(array("id" => "cidade","name" => "cidade","class" => "form-control","value" => $park[0]["cidade"]));?>
+						<?php echo form_error('cidade'); ?>
 					</div>
-					<div class="form-group col-md-5">
-						<label>*Bairro</label>
-						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control"));?>
+					<div class="form-group col-md-5" style="padding-right:0;">
+						<label form="bairro">Bairro</label>
+						<?php echo form_input(array("id" => "bairro","name" => "bairro","class" => "form-control","value" => $park[0]["bairro"]));?>
+						<?php echo form_error('bairro'); ?>
 					</div>
-					<div class="row form-group col-md-4">
-						<label>*Rua</label>
-						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control"));?>
+					<div class=" form-group col-md-4" style="padding-left:0;">
+						<label form="rua">Rua</label>
+						<?php echo form_input(array("id" => "rua","name" => "rua","class" => "form-control","value" => $park[0]["rua"]));?>
+						<?php echo form_error('rua'); ?>
 					</div>
 					<div class="form-group col-md-3">
-						<label>*Nº</label>
-						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control"));?>
+						<label form="numero">Nº</label>
+						<?php echo form_input(array("id" => "numero","name" => "numero","class" => "form-control","value" => $park[0]["numero"]));?>
+						<?php echo form_error('numero'); ?>
 					</div>
-					<div class="form-group col-md-3">
-						<label>Complemento</label>
+					<div class="form-group col-md-3" style="padding-right:0;">
+						<label form="complemento">Complemento</label>
 						<?php echo form_input(array("id" => "complemento","name" => "complemento","class" => "form-control"));?>
 
 						<?php echo form_input(array("id" => "endereco","name" => "endereco","class" => "form-control","type" => "hidden"));?>
 					</div>
-					<div class="col-md-9 well" id="preco">
+					<div class="col-md-10 well" id="preco">
 						<h4 class="row">Preços</h4>
 
 						<div class="col-md-3" style="padding:3px;">
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
-								<?= form_input(array('id'=>'15min','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'15 Minutos')) ?>
+								<?= form_input(array('id'=>'15min','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'15 Minutos',"value" => $park[0]["15min"])) ?>
 							</div>
 						</div>
 
 						<div class="col-md-3" style="padding:3px;">
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
-								<?= form_input(array('id'=>'30min','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'30 Minutos')) ?>
+								<?= form_input(array('id'=>'30min','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'30 Minutos',"value" => $park[0]["30min"])) ?>
 							</div>
 						</div>
 
 						<div class="col-md-3" style="padding:3px;">
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
-								<?= form_input(array('id'=>'hora','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'1ª Hora')) ?>
+								<?= form_input(array('id'=>'hora','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'1ª Hora',"value" => $park[0]["phora"])) ?>
 							</div>
 						</div>
 
 						<div class="col-md-3" style="padding:3px;">
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
-								<?= form_input(array('id'=>'sHora','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Hora Subsequente')) ?>
+								<?= form_input(array('id'=>'sHora','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Hora Subsequente',"value" => $park[0]["Hsub"])) ?>
 							</div>
 						</div>
 
 						<div class="col-md-3" style="padding:3px;">
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
-								<?= form_input(array('id'=>'diaria','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Diária')) ?>
+								<?= form_input(array('id'=>'diaria','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Diária',"value" => $park[0]["diaria"])) ?>
 							</div>
 						</div>
 
 						<div class="col-md-3" style="padding:3px;">
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">R$</span>
-								<?= form_input(array('id'=>'pernoite','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Pernoite')) ?>
+								<?= form_input(array('id'=>'pernoite','type'=>'text','class'=>'form-control','aria-describedby'=>'basic-addon1','placeholder'=>'Pernoite',"value" => $park[0]["pernoite"])) ?>
 							</div>
 						</div>
 					</div>
 
-					<div class="row form-group col-md-10">
-						<?php echo form_label("*Descrição","descricao");?>
-						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control"));?>
+					<div class="form-group col-md-10">
+						<?php echo form_label("Descrição","descricao");?>
+						<?php echo form_textarea(array("id" => "descricao","name" => "descricao","rows" => "5","class" => "form-control","value" => $park[0]["descricao"]));?>
 						<div>
 							<input id="coords" name="coords" type="hidden">
 						</div>
 					</div>
 
-					<div class="row form-group col-md-10">
-						<?php echo form_button(array("id" => "cadastrar","content" => "Cadastrar","type" => "submit","class" => "btn btn-primary form-control"));?>
+					<div class="form-group col-md-10">
+						<?php echo form_button(array("id" => "editar","content" => "Editar","type" => "submit","class" => "btn btn-primary form-control"));?>
 						<?php echo form_close() ?>
 						<?php echo form_open("estacionamentos");?>
 						<?php echo form_button(array("content" => "Voltar","type" => "submit","class" => "btn btn-link form-control"));?>
@@ -129,53 +138,51 @@
 	<script src="<?php echo base_url("js/jquery.min.js");?>"></script>
 	<script src="<?php echo base_url("js/bootstrap.min.js");?>"></script>
 	<script src="<?php echo base_url("js/jquery-ui.custom.min.js");?>"></script>
-	<script src="//cdn.ckeditor.com/4.5.1/full/ckeditor.js"></script>
+	<script src="//cdn.ckeditor.com/4.5.1/standard/ckeditor.js"></script>
 	<script>
-	CKEDITOR.replace('descricao',{ height: 200 });
+		CKEDITOR.replace('descricao',{ height: 200 });
 
-	$("#cep").bind('blur keyup change',function(e){
-		var cep = $('#cep').val().replace('-', '');
-		console.log(cep);
-		if(cep !== ""){
-			var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
-			$.getJSON(url, function(json){
-				$("#rua").val(json.logradouro);
-				$("#bairro").val(json.bairro);
-				$("#cidade").val(json.localidade);
-				$("#uf").val(json.uf);
-				$("#numero").focus();
-			}).fail(function(){
-				console.log('CEP inexistente');
-				$("#rua").val(" ");
-				$("#bairro").val(" ");
-				$("#cidade").val(" ");
-				$("#uf").val(" ");
-				$(this).focus();
-			});
+		$("#cep").bind('blur keyup change',function(e){
+			var cep = $('#cep').val().replace('-', '');
+			if(cep !== ""){
+				var url = 'http://cep.correiocontrol.com.br/'+cep+'.json';
+				$.getJSON(url, function(json){
+					$("#rua").val(json.logradouro);
+					$("#bairro").val(json.bairro);
+					$("#cidade").val(json.localidade);
+					$("#uf").val(json.uf);
+					$("#numero").focus();
+				}).fail(function(){
+					$("#rua").val("");
+					$("#bairro").val("");
+					$("#cidade").val("");
+					$("#uf").val("");
+					$(this).focus();
+				});
 
-		}
-	});
-
-	$("#numero").bind('keyup change',function(e){
-		var uf = $("#uf").val();
-		var cidade = $("#cidade").val();
-		var bairro = $("#bairro").val();
-		var rua = $("#rua").val();
-		var numero = $("#numero").val();
-		$("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
-	});
-
-	$("#numero").bind('keyup blur change',function(e){
-		var geocoder = new google.maps.Geocoder();
-		var endereco = $('#endereco').val();
-		geocoder.geocode({'address': endereco }, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				if (results[0]) { 
-					$('#coords').val(results[0].geometry.location);
-				}
-			};
+			}
 		});
-	});
+
+		$("#numero").bind('keyup change',function(e){
+			var uf = $("#uf").val();
+			var cidade = $("#cidade").val();
+			var bairro = $("#bairro").val();
+			var rua = $("#rua").val();
+			var numero = $("#numero").val();
+			$("#endereco").val(uf+","+cidade+","+bairro+","+rua+","+numero);
+		});
+
+		$("#numero").bind('keyup blur change',function(e){
+			var geocoder = new google.maps.Geocoder();
+			var endereco = $('#endereco').val();
+			geocoder.geocode({'address': endereco }, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+					if (results[0]) { 
+						$('#coords').val(results[0].geometry.location);
+					}
+				};
+			});
+		});
 	</script>
 </body>
 </html>
